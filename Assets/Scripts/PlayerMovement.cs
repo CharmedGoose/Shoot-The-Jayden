@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-
+    [Header("Settings")]
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
+    [Header("Ground Check")]
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
@@ -42,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(speed * Time.deltaTime * move);
+        controller.Move(speed * Time.deltaTime * move.normalized);
 
         if (jump.IsPressed() && isGrounded)
         {

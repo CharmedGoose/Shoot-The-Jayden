@@ -15,11 +15,15 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         mouse = InputSystem.actions.FindAction("Look");
     }
 
     void Update()
-    {
+    {   
+        if (mouse == null) return;
+
         Vector2 mousePosition = mouse.ReadValue<Vector2>();
 
         float mouseX = mousePosition.x * mouseSensitivity * Time.deltaTime;
