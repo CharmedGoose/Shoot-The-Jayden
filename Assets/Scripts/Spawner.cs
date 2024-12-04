@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float amountToSpawn = 10;
+    public GameObject Object;
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < amountToSpawn; i++)
+        {
+            Instantiate(Object, new Vector3(Random.Range(-325, 325), 100, Random.Range(-325, 325)), Quaternion.identity);
+        }
     }
 }
