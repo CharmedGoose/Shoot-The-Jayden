@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 696557589}
-  mouseSensitivity: 2
+  mouseSensitivity: 100
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1739,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &915937064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915937066}
+  - component: {fileID: 915937065}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &915937065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915937064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5af69b95ac80e84a95d350ff4b491ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &915937066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915937064}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916594674
 GameObject:
   m_ObjectHideFlags: 0
@@ -2540,7 +2584,7 @@ MonoBehaviour:
   - lod: 0
     visibleDstThreshold: 400
     useForCollider: 1
-  viewer: {fileID: 330585546}
+  viewer: {fileID: 696557589}
   mapMaterial: {fileID: 2100000, guid: a6ce2e70632423542855bd252d7e1503, type: 2}
 --- !u!1 &1437038006
 GameObject:
@@ -3019,6 +3063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1750356539}
   - component: {fileID: 1750356538}
+  - component: {fileID: 1750356540}
   m_Layer: 6
   m_Name: Jayden
   m_TagString: Untagged
@@ -3067,6 +3112,18 @@ Transform:
   - {fileID: 543450652338151213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1750356540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750356537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834c279cea2cd2f4ca1d52c94d083dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1766770160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,3 +4951,4 @@ SceneRoots:
   - {fileID: 1750356539}
   - {fileID: 696557589}
   - {fileID: 966611380}
+  - {fileID: 915937066}

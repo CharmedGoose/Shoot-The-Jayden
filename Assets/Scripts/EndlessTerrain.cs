@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class EndlessTerrain : MonoBehaviour
-{ 
+{
     const float scale = 1f;
 
     const float viewerMoveThresholdForChunkUpdate = 25f;
@@ -69,12 +69,13 @@ public class EndlessTerrain : MonoBehaviour
                 else
                 {
                     terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, detailLevels, transform, mapMaterial));
-                }                
+                }
             }
         }
     }
 
-    public class TerrainChunk {
+    public class TerrainChunk
+    {
 
         GameObject meshObject;
         Vector2 position;
@@ -137,8 +138,10 @@ public class EndlessTerrain : MonoBehaviour
             UpdateTerrainChunk();
         }
 
-        public void UpdateTerrainChunk() {
-            if (mapDataReceived) {
+        public void UpdateTerrainChunk()
+        {
+            if (mapDataReceived)
+            {
                 float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
                 bool visible = viewerDstFromNearestEdge <= maxViewDst;
 
@@ -188,34 +191,40 @@ public class EndlessTerrain : MonoBehaviour
             }
         }
 
-        public void SetVisible(bool visible) {
+        public void SetVisible(bool visible)
+        {
             meshObject.SetActive(visible);
         }
 
-        public bool IsVisible() {
+        public bool IsVisible()
+        {
             return meshObject.activeSelf;
         }
     }
 
-    class LODMesh {
+    class LODMesh
+    {
         public Mesh mesh;
         public bool hasRequestedMesh;
         public bool hasMesh;
         int lod;
         System.Action updateCallback;
 
-        public LODMesh(int lod, System.Action updateCallback) {
+        public LODMesh(int lod, System.Action updateCallback)
+        {
             this.lod = lod;
             this.updateCallback = updateCallback;
         }
 
-        public void RequestMesh(MapData mapData) {
+        public void RequestMesh(MapData mapData)
+        {
             hasRequestedMesh = true;
             MeshData meshData = mapGenerator.GenerateMeshData(mapData, lod);
             OnMeshDataReceived(meshData);
         }
 
-        void OnMeshDataReceived(MeshData meshData) {
+        void OnMeshDataReceived(MeshData meshData)
+        {
             mesh = meshData.CreateMesh();
             hasMesh = true;
 
@@ -224,12 +233,14 @@ public class EndlessTerrain : MonoBehaviour
     }
 
     [System.Serializable]
-    public struct LODInfo {
+    public struct LODInfo
+    {
         public int lod;
         public float visibleDstThreshold;
         public bool useForCollider;
 
-        public LODInfo(int lod, float visibleDstThreshold, bool useForCollider) {
+        public LODInfo(int lod, float visibleDstThreshold, bool useForCollider)
+        {
             this.lod = lod;
             this.visibleDstThreshold = visibleDstThreshold;
             this.useForCollider = useForCollider;
