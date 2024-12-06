@@ -1,15 +1,26 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Gun : MonoBehaviour
 {
+    [Header("Gun Stats")]
     public float damage = 10f;
-    public float range = 100f;
+    public float range = 1000f;
     public float fireRate = 15f;
 
-    float nextTimeToFire = 0f;
+    public float maxAmmo = 10f;
+    public float reloadTime = 1f;
 
+    [Header("References")]
     public ParticleSystem muzzleFlash;
+    public GameObject impactEffect;
+
+    float currentAmmo;
+
+    bool isReloading = false;
+
+    float nextTimeToFire = 0f;
 
     Transform cameraTransform;
 
@@ -19,10 +30,22 @@ public class Gun : MonoBehaviour
     {
         shootButton = InputSystem.actions.FindAction("Shoot");
         cameraTransform = Camera.main.transform;
+        currentAmmo = maxAmmo;
     }
 
     void Update()
     {
+        if (isReloading)
+        {
+            return;
+        }
+
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+
         if (shootButton.IsPressed() && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -34,6 +57,8 @@ public class Gun : MonoBehaviour
     {
         muzzleFlash.Play();
 
+        currentAmmo--;
+
         if (Physics.Raycast(cameraTransform.position, transform.forward, out RaycastHit hit, range))
         {
             Debug.Log(hit.transform.name);
@@ -44,5 +69,13 @@ public class Gun : MonoBehaviour
                 target.TakeDamage(damage);
             }
         }
+    }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadTime);
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 }
