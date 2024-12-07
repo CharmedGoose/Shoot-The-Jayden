@@ -1,7 +1,8 @@
+//Tutorial Used: https://www.youtube.com/watch?v=adcKX1c-kag
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(Animator))]
 public class Scope : MonoBehaviour

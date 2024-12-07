@@ -1,3 +1,5 @@
+//Tutorial Used: https://www.youtube.com/watch?v=Dn_BUIVdAPg
+
 using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour

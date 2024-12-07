@@ -1,4 +1,7 @@
-using System;
+//Tutorial Used: Procedural Terrain Generation by Sebastian Lague
+//Youtube: https://www.youtube.com/playlist?list=PLFt_AvWsXl0eBW2EiBtl_sxmDtSgZBxB3
+//Github: https://github.com/SebLague/Procedural-Landmass-Generation
+
 using UnityEngine;
 
 public static class Noise
