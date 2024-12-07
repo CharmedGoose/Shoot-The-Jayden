@@ -15,11 +15,17 @@ public class Gun : MonoBehaviour
     public float maxAmmo = 10f;
     public float reloadTime = 1f;
 
+    public bool hasRecoil = true;
+    public AnimationCurve recoilHorizontal;
+    public AnimationCurve recoilVertical;
+    public float recoilTimeInterval = 0.25f;
+
     [Header("References")]
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject bloodEffect;
     public AudioClip shootSound;
+    public MouseLook mouseLook;
 
     float currentAmmo;
 
@@ -38,11 +44,12 @@ public class Gun : MonoBehaviour
         shootButton = InputSystem.actions.FindAction("Shoot");
         cameraTransform = Camera.main.transform;
         currentAmmo = maxAmmo;
-        layerMask =~ LayerMask.GetMask("Player");
+        layerMask = ~LayerMask.GetMask("Player");
     }
 
     void Update()
     {
+        mouseLook.shot = false;
         if (isReloading)
         {
             return;
@@ -53,12 +60,16 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
             return;
         }
-
         if (shootButton.IsPressed() && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
+            if (hasRecoil)
+            {
+                mouseLook.shot = true;
+            }
         }
+        
     }
 
     void Shoot()
@@ -78,7 +89,9 @@ public class Gun : MonoBehaviour
                 {
                     target.TakeDamage(9999);
                 }
-            } else {
+            }
+            else
+            {
                 if (hit.transform.CompareTag("Head"))
                 {
                     Target target = hit.transform.parent.GetComponent<Target>();
@@ -87,7 +100,8 @@ public class Gun : MonoBehaviour
                         target.TakeDamage(damage);
                     }
                 }
-                else {
+                else
+                {
                     Target target = hit.transform.GetComponent<Target>();
                     if (target != null)
                     {
