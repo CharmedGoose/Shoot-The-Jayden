@@ -3,10 +3,14 @@ using UnityEngine.InputSystem;
 
 public class MouseLook : MonoBehaviour
 {
-
-    public Transform body;
-
+    [Header("Settings")]
     public float mouseSensitivity = 100f;
+    public float mouseADSSensitivity = 50f;
+    [HideInInspector]
+    public float currentSensitivity;
+
+    [Header("References")]
+    public Transform body;
 
     float xRotation = 0f;
 
@@ -16,6 +20,7 @@ public class MouseLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        currentSensitivity = mouseSensitivity;
 
         mouse = InputSystem.actions.FindAction("Look");
     }
@@ -26,8 +31,8 @@ public class MouseLook : MonoBehaviour
 
         Vector2 mousePosition = mouse.ReadValue<Vector2>();
 
-        float mouseX = mousePosition.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = mousePosition.y * mouseSensitivity * Time.deltaTime;
+        float mouseX = mousePosition.x * currentSensitivity * Time.deltaTime;
+        float mouseY = mousePosition.y * currentSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

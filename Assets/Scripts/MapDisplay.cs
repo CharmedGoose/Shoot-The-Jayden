@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class MapDisplay : MonoBehaviour
 {
+    [Header("References")]
     public Renderer textureRenderer;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
