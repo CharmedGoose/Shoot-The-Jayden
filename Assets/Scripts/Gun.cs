@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Animations.Rigging;
 
 public class Gun : MonoBehaviour
 {
@@ -20,12 +21,27 @@ public class Gun : MonoBehaviour
     public AnimationCurve recoilVertical;
     public float recoilTimeInterval = 0.25f;
 
+    public float bulletEjectDelay = 0.1f;
+
     [Header("References")]
+    public Animator animator;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject bloodEffect;
+    public GameObject bullet; 
+    public Transform bulletSpawn;
     public AudioClip shootSound;
     public MouseLook mouseLook;
+
+    [Header("IK")]
+    public TwoBoneIKConstraint leftHandIK;
+    public Transform leftHand;
+    public Transform leftHandDefault;
+    public Transform leftHandReload;
+    public TwoBoneIKConstraint rightHandIK;
+    public Transform rightHand;
+    public Transform rightHandDefault;
+    public Transform rightHandEject;
 
     float currentAmmo;
 
@@ -60,6 +76,16 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
             return;
         }
+
+        if(Time.time >= nextTimeToFire)
+        {
+            animator.SetBool("eject", false);
+            rightHand.position = rightHandDefault.position;
+        } else
+        {
+            rightHand.position = rightHandEject.position;
+        }
+
         if (shootButton.IsPressed() && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -123,6 +149,10 @@ public class Gun : MonoBehaviour
                 Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal), hit.transform.parent);
             }
         }
+
+        animator.SetBool("eject", true);
+        rightHand.position = rightHandEject.position;
+        StartCoroutine(Eject());
     }
 
     IEnumerator Reload()
@@ -131,5 +161,12 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
         isReloading = false;
+    }
+
+    IEnumerator Eject()
+    {
+        yield return new WaitForSeconds(bulletEjectDelay);
+        GameObject bulletCasing = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        bulletCasing.GetComponentInChildren<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
     }
 }

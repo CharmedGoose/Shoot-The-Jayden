@@ -16,6 +16,8 @@ public class Scope : MonoBehaviour
 
     float defaultFOV;
 
+    bool resume;
+
     MouseLook mouseLook;
     GameObject weaponCamera;
     Animator animator;
@@ -31,6 +33,7 @@ public class Scope : MonoBehaviour
 
         scopeButton.performed += ctx =>
         {
+            if(animator.GetBool("eject") || resume) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
@@ -44,10 +47,20 @@ public class Scope : MonoBehaviour
 
     void Update()
     {
-        if (!scopeButton.IsPressed())
+        if (!scopeButton.IsPressed() || animator.GetBool("eject"))
         {
+            if(animator.GetBool("eject") && animator.GetBool("isScoped"))
+            {
+                resume = true;
+            }
             animator.SetBool("isScoped", false);
             OnUnscope();
+        }
+        if(resume && !animator.GetBool("eject"))
+        {
+            animator.SetBool("isScoped", true);
+            StartCoroutine(OnScope());
+            resume = false;
         }
     }
 
