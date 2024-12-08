@@ -370,7 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 164643364}
   - component: {fileID: 164643365}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: HeadCheck
   m_TagString: Head
   m_Icon: {fileID: 0}
@@ -2256,7 +2256,7 @@ GameObject:
   - component: {fileID: 709581369}
   - component: {fileID: 709581372}
   - component: {fileID: 709581371}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2981,7 +2981,7 @@ GameObject:
   - component: {fileID: 1008481363}
   - component: {fileID: 1008481366}
   - component: {fileID: 1008481365}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3815,7 +3815,7 @@ MonoBehaviour:
     visibleDstThreshold: 400
     useForCollider: 1
   - lod: 1
-    visibleDstThreshold: 800
+    visibleDstThreshold: 700
     useForCollider: 0
   viewer: {fileID: 696557589}
   mapMaterial: {fileID: 2100000, guid: a6ce2e70632423542855bd252d7e1503, type: 2}
@@ -4585,7 +4585,7 @@ GameObject:
   - component: {fileID: 1750356538}
   - component: {fileID: 1750356540}
   - component: {fileID: 1750356541}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Jayden
   m_TagString: Jayden
   m_Icon: {fileID: 0}
@@ -4610,7 +4610,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2.5
+  m_Height: 2.35
   m_Radius: 0.35
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -4653,7 +4653,7 @@ MonoBehaviour:
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &1750356541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4708,9 +4708,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1802946696}
-  m_Layer: 6
+  - component: {fileID: 1802946697}
+  m_Layer: 0
   m_Name: GroundCheck
-  m_TagString: Untagged
+  m_TagString: Jayden
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4730,6 +4731,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1750356539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1802946697
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802946695}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5526915, y: 0.05659485, z: 0.39964843}
+  m_Center: {x: 0.03491196, y: 0.00024414062, z: 0.22463405}
 --- !u!1 &1804460899
 GameObject:
   m_ObjectHideFlags: 0
@@ -4741,7 +4763,10 @@ GameObject:
   - component: {fileID: 1804460903}
   - component: {fileID: 1804460902}
   - component: {fileID: 1804460901}
-  - component: {fileID: 1804460900}
+  - component: {fileID: 1804460904}
+  - component: {fileID: 1804460905}
+  - component: {fileID: 1804460907}
+  - component: {fileID: 1804460906}
   m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
@@ -4749,28 +4774,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!64 &1804460900
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804460899}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1804460901
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4839,6 +4842,88 @@ Transform:
   m_Children: []
   m_Father: {fileID: 966611380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1804460904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804460899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.999999, y: 2.220446e-16, z: 9.999999}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1804460905
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804460899}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &1804460906
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804460899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1804460907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804460899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af28a3f7a6580a4f907ac3edcbd7c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1810058259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,7 +5661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7630245098219803739}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Thigh.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5592,7 +5677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5139273863532677576}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Shoulder.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5640,7 +5725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1773099919867378970}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Foot.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5657,7 +5742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652338151213}
   - component: {fileID: 5866666020519544151}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Character
   m_TagString: Jayden
   m_Icon: {fileID: 0}
@@ -5689,7 +5774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5290362703763089311}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: UpperArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5740,7 +5825,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3829990000717452984}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5756,7 +5841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8051792917459091893}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Shoulder.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5804,7 +5889,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6086031096168013300}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5851,7 +5936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4397234124214416339}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Control.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5883,7 +5968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6846647105631967410}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ForeArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5915,7 +6000,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3611223042617102256}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5931,7 +6016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588205201300845961}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: UpperArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5947,7 +6032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766667748918995988}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Foot.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5963,7 +6048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3468060759185283833}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Foot.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6041,7 +6126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 597045438863995708}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6057,7 +6142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7937253087461445633}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pole.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6107,7 +6192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3153894004063030891}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6139,7 +6224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8896682150197209436}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Shin.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6202,7 +6287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1069294589283391833}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Shin.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6218,7 +6303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2136094560115086896}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Foot.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6234,7 +6319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5832912407255595997}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6297,7 +6382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4556782891412395415}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ForeArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6366,7 +6451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6401524132946210881}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6400,7 +6485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1336686810432318749}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LowPolyCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6432,7 +6517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9146073696792711430}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pole.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6448,7 +6533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5421224768266049253}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pole.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6480,7 +6565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349734520836460671}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Control.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6625,7 +6710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4730159298648339272}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Control.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6641,7 +6726,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3509571565149961793}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6657,7 +6742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1576212113769899878}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pole.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6674,7 +6759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4083501150068072811}
   - component: {fileID: 7696407345190968861}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube.001
   m_TagString: Jayden
   m_Icon: {fileID: 0}
@@ -6690,7 +6775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7849055741892665001}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6706,7 +6791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4577360721912059944}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Control.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6722,7 +6807,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2529915310051025282}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Thigh.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

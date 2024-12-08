@@ -40,7 +40,7 @@ public class JaydenMovement : MonoBehaviour
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
-        if (Random.Range(0, 11) == 0 && isGrounded)
+        if (Random.Range(0, 11000) == 0 && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

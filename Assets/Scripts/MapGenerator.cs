@@ -58,11 +58,11 @@ public class MapGenerator : MonoBehaviour
             }
             if (instance.useFlatShading)
             {
-                return 95;
+                return 101;
             }
             else
             {
-                return 239;
+                return 245;
             }
         }
     }
