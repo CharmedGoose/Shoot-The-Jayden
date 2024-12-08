@@ -22,12 +22,17 @@ public class PlayerMovement : MonoBehaviour
     Transform groundCheck;
     bool isGrounded;
 
+    float x;
+    float z;
+
+    Vector3 move;
+
     CharacterController controller;
 
     InputAction moveControls;
     InputAction jump;
 
-    void Start()
+    void Awake()
     {
         moveControls = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
@@ -45,12 +50,12 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = moveControls.ReadValue<Vector2>().x;
-        float z = moveControls.ReadValue<Vector2>().y;
+        x = moveControls.ReadValue<Vector2>().x;
+        z = moveControls.ReadValue<Vector2>().y;
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        move = transform.right * x + transform.forward * z;
 
-        if(move.magnitude > 0)
+        if(move != Vector3.zero)
         {
             animator.SetBool("isWalking", true);
         }

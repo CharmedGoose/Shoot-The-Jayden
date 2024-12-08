@@ -22,6 +22,16 @@ public class MouseLook : MonoBehaviour
 
     float recoil;
 
+    Vector2 mousePosition;
+
+    float mouseX;
+    float mouseY;
+
+    Quaternion result;
+
+    float vertical;
+    float horizontal;
+
     InputAction mouse;
 
     void Start()
@@ -39,12 +49,12 @@ public class MouseLook : MonoBehaviour
 
         gun = transform.parent.GetComponentInChildren<Gun>();
 
-        Vector2 mousePosition = mouse.ReadValue<Vector2>();
+        mousePosition = mouse.ReadValue<Vector2>();
 
-        float mouseX = mousePosition.x * currentSensitivity * Time.deltaTime;
-        float mouseY = mousePosition.y * currentSensitivity * Time.deltaTime;
+        mouseX = mousePosition.x * currentSensitivity * Time.deltaTime;
+        mouseY = mousePosition.y * currentSensitivity * Time.deltaTime;
 
-        //Taken From https://discussions.unity.com/t/weapon-recoil/831478/2
+        //https://discussions.unity.com/t/weapon-recoil/831478/2
         if (shot)
         {
             recoil = Time.deltaTime;
@@ -61,7 +71,7 @@ public class MouseLook : MonoBehaviour
                 time = 0;
             }
 
-            Quaternion result = Recoil(time);
+            result = Recoil(time);
 
             mouseX += result.x;
             mouseY += result.y;
@@ -74,10 +84,10 @@ public class MouseLook : MonoBehaviour
         body.Rotate(Vector3.up * mouseX);
     }
 
-    //Taken From https://discussions.unity.com/t/weapon-recoil/831478/2
+    //https://discussions.unity.com/t/weapon-recoil/831478/2
     Quaternion Recoil(float time) {
-        float vertical = -gun.recoilVertical.Evaluate(time);
-        float horizontal = gun.recoilHorizontal.Evaluate(time);
+        vertical = -gun.recoilVertical.Evaluate(time);
+        horizontal = gun.recoilHorizontal.Evaluate(time);
 
         if (time == 0)
         {

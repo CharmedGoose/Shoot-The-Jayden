@@ -19,6 +19,9 @@ public class ShowBorder : MonoBehaviour
     Renderer southWallRenderer;
     Renderer westWallRenderer;
 
+    float opacity;
+    float distance;
+
     void Start()
     {
         player = Camera.main.transform;
@@ -43,10 +46,10 @@ public class ShowBorder : MonoBehaviour
 
     void UpdateBorderOpacity(Renderer renderer, System.Func<float> getDistance)
     {
-        float distance = getDistance();
+        distance = getDistance();
         if(distance < fadeDistance)
         {
-            float opacity = (fadeDistance - distance) * fadeStrength;
+            opacity = (fadeDistance - distance) * fadeStrength;
             renderer.material.color = new Color(0, 0, 0, opacity);
         }
     }

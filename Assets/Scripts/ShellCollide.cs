@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class ShellCollide : MonoBehaviour
 {
@@ -8,11 +7,6 @@ public class ShellCollide : MonoBehaviour
     void OnCollisionEnter()
     {
         AudioSource.PlayClipAtPoint(shellHitSound, transform.position);
-    }
-
-    IEnumerator Destroy()
-    {
-        yield return new WaitForSeconds(shellHitSound.length + 1f);
-        Destroy(gameObject);
+        Destroy(gameObject, shellHitSound.length + 1f);
     }
 }

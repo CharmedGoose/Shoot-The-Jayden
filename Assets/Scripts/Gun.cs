@@ -28,7 +28,7 @@ public class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject bloodEffect;
-    public GameObject bullet; 
+    public GameObject bullet;
     public Transform bulletSpawn;
     public AudioClip shootSound;
     public MouseLook mouseLook;
@@ -45,6 +45,14 @@ public class Gun : MonoBehaviour
 
     float currentAmmo;
 
+    Target target;
+
+    RaycastHit hit;
+
+    GameObject impact;
+
+    GameObject bulletCasing;
+
     bool isReloading = false;
 
     float nextTimeToFire = 0f;
@@ -55,7 +63,7 @@ public class Gun : MonoBehaviour
 
     InputAction shootButton;
 
-    void Start()
+    void Awake()
     {
         shootButton = InputSystem.actions.FindAction("Shoot");
         cameraTransform = Camera.main.transform;
@@ -66,10 +74,7 @@ public class Gun : MonoBehaviour
     void Update()
     {
         mouseLook.shot = false;
-        if (isReloading)
-        {
-            return;
-        }
+        if (isReloading) return;
 
         if (currentAmmo <= 0)
         {
@@ -77,11 +82,12 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        if(Time.time >= nextTimeToFire)
+        if (Time.time >= nextTimeToFire && animator.GetBool("eject"))
         {
             animator.SetBool("eject", false);
             rightHand.position = rightHandDefault.position;
-        } else
+        }
+        else if (animator.GetBool("eject"))
         {
             rightHand.position = rightHandEject.position;
         }
@@ -90,12 +96,9 @@ public class Gun : MonoBehaviour
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
-            if (hasRecoil)
-            {
-                mouseLook.shot = true;
-            }
+            if (hasRecoil) mouseLook.shot = true;
         }
-        
+
     }
 
     void Shoot()
@@ -105,12 +108,11 @@ public class Gun : MonoBehaviour
 
         currentAmmo--;
 
-        if (Physics.Raycast(cameraTransform.position, transform.forward, out RaycastHit hit, range, layerMask))
+        if (Physics.Raycast(cameraTransform.position, transform.forward, out hit, range, layerMask))
         {
-            Debug.Log(hit.transform.name);
             if (hit.transform.CompareTag("Head") && headshotInstantKill)
             {
-                Target target = hit.transform.parent.GetComponent<Target>();
+                target = hit.transform.parent.GetComponent<Target>();
                 if (target != null)
                 {
                     target.TakeDamage(9999);
@@ -120,7 +122,7 @@ public class Gun : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Head"))
                 {
-                    Target target = hit.transform.parent.GetComponent<Target>();
+                    target = hit.transform.parent.GetComponent<Target>();
                     if (target != null)
                     {
                         target.TakeDamage(damage);
@@ -128,7 +130,7 @@ public class Gun : MonoBehaviour
                 }
                 else
                 {
-                    Target target = hit.transform.GetComponent<Target>();
+                    target = hit.transform.GetComponent<Target>();
                     if (target != null)
                     {
                         target.TakeDamage(damage);
@@ -136,7 +138,7 @@ public class Gun : MonoBehaviour
                 }
             }
 
-            GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
 
             Destroy(impact, 0.75f);
 
@@ -166,7 +168,7 @@ public class Gun : MonoBehaviour
     IEnumerator Eject()
     {
         yield return new WaitForSeconds(bulletEjectDelay);
-        GameObject bulletCasing = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        bulletCasing = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
         bulletCasing.GetComponentInChildren<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
     }
 }

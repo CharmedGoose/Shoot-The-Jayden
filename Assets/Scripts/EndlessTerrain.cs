@@ -24,6 +24,10 @@ public class EndlessTerrain : MonoBehaviour
     int chunkSize;
     int chunksVisibleInViewDst;
 
+    int currentChunkCoordX;
+    int currentChunkCoordY;
+    Vector2 viewedChunkCoord;
+
     Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new();
     static List<TerrainChunk> terrainChunksVisibleLastUpdate = new();
 
@@ -32,7 +36,7 @@ public class EndlessTerrain : MonoBehaviour
         mapGenerator = FindFirstObjectByType<MapGenerator>();
 
         maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
-        chunkSize = MapGenerator.mapChunkSize - 1;
+        chunkSize = MapGenerator.MapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
 
         UpdateVisibleChunks();
@@ -57,14 +61,14 @@ public class EndlessTerrain : MonoBehaviour
         }
         terrainChunksVisibleLastUpdate.Clear();
 
-        int currentChunkCoordX = Mathf.RoundToInt(viewerPosition.x / chunkSize);
-        int currentChunkCoordY = Mathf.RoundToInt(viewerPosition.y / chunkSize);
+        currentChunkCoordX = Mathf.RoundToInt(viewerPosition.x / chunkSize);
+        currentChunkCoordY = Mathf.RoundToInt(viewerPosition.y / chunkSize);
 
         for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++)
         {
             for (int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++)
             {
-                Vector2 viewedChunkCoord = new(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
+                viewedChunkCoord = new(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
 
                 if (terrainChunkDictionary.ContainsKey(viewedChunkCoord))
                 {
@@ -97,13 +101,19 @@ public class EndlessTerrain : MonoBehaviour
         bool mapDataReceived;
         int previousLODIndex = -1;
 
+        Vector3 positionV3;
+        Texture2D texture;
+        LODMesh lodMesh;
+        float viewerDstFromNearestEdge;
+        bool visible;
+
         public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, Transform parent, Material material)
         {
             this.detailLevels = detailLevels;
 
             position = coord * size;
             bounds = new Bounds(position, Vector2.one * size);
-            Vector3 positionV3 = new(position.x, 0, position.y);
+            positionV3 = new(position.x, 0, position.y);
 
             meshObject = new GameObject("Terrain Chunk");
             meshRenderer = meshObject.AddComponent<MeshRenderer>();
@@ -136,7 +146,7 @@ public class EndlessTerrain : MonoBehaviour
             this.mapData = mapData;
             mapDataReceived = true;
 
-            Texture2D texture = TextureGenerator.TextureFromColourMap(mapData.colourMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
+            texture = TextureGenerator.TextureFromColourMap(mapData.colourMap, MapGenerator.MapChunkSize, MapGenerator.MapChunkSize);
             meshRenderer.material.mainTexture = texture;
 
             UpdateTerrainChunk();
@@ -146,8 +156,8 @@ public class EndlessTerrain : MonoBehaviour
         {
             if (mapDataReceived)
             {
-                float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
-                bool visible = viewerDstFromNearestEdge <= maxViewDst;
+                viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
+                visible = viewerDstFromNearestEdge <= maxViewDst;
 
                 if (visible)
                 {
@@ -167,7 +177,7 @@ public class EndlessTerrain : MonoBehaviour
 
                     if (lodIndex != previousLODIndex)
                     {
-                        LODMesh lodMesh = lodMeshes[lodIndex];
+                        lodMesh = lodMeshes[lodIndex];
                         if (lodMesh.hasMesh)
                         {
                             previousLODIndex = lodIndex;
@@ -223,8 +233,7 @@ public class EndlessTerrain : MonoBehaviour
         public void RequestMesh(MapData mapData)
         {
             hasRequestedMesh = true;
-            MeshData meshData = mapGenerator.GenerateMeshData(mapData, lod);
-            OnMeshDataReceived(meshData);
+            OnMeshDataReceived(mapGenerator.GenerateMeshData(mapData, lod));
         }
 
         void OnMeshDataReceived(MeshData meshData)

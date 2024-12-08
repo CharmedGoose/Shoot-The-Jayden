@@ -17,8 +17,7 @@ public static class Noise
 
         float maxPossibleHeight = 0;
         float amplitude = 1;
-        float frequency = 1;
-
+        
         for (int i = 0; i < octaves; i++) {
             float offsetX = prng.Next(-100000, 100000) + offset.x;
             float offsetY = prng.Next(-100000, 100000) - offset.y;
@@ -41,8 +40,7 @@ public static class Noise
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
                 amplitude = 1;
-                frequency = 1;
-
+                float frequency = 1;
                 float noiseHeight = 0;
 
                 for (int i = 0; i < octaves; i++) {

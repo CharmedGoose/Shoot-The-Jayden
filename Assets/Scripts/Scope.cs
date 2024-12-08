@@ -12,33 +12,53 @@ public class Scope : MonoBehaviour
 
     [Header("References")]
     public GameObject scope;
-    public Camera mainCamera;
 
     float defaultFOV;
 
     bool resume;
 
+    Camera mainCamera;
     MouseLook mouseLook;
     GameObject weaponCamera;
     Animator animator;
     InputAction scopeButton;
 
-    void Start()
+    void Awake()
     {
+        mainCamera = Camera.main;
         defaultFOV = mainCamera.fieldOfView;
         animator = GetComponent<Animator>();
         mouseLook = mainCamera.GetComponent<MouseLook>();
         weaponCamera = transform.parent.Find("WeaponCamera").gameObject;
         scopeButton = InputSystem.actions.FindAction("Aim");
+    }
 
+    void OnEnable()
+    {
         scopeButton.performed += ctx =>
         {
-            if(animator.GetBool("eject") || resume) return;
+            if (animator.GetBool("eject") || resume) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
 
         scopeButton.canceled += ctx =>
+        {
+            animator.SetBool("isScoped", false);
+            OnUnscope();
+        };
+    }
+
+    void OnDisable()
+    {
+        scopeButton.performed -= ctx =>
+        {
+            if (animator.GetBool("eject") || resume) return;
+            animator.SetBool("isScoped", true);
+            StartCoroutine(OnScope());
+        };
+
+        scopeButton.canceled -= ctx =>
         {
             animator.SetBool("isScoped", false);
             OnUnscope();
@@ -56,7 +76,7 @@ public class Scope : MonoBehaviour
             animator.SetBool("isScoped", false);
             OnUnscope();
         }
-        if(resume && !animator.GetBool("eject"))
+        if(resume && !animator.GetBool("eject") && scopeButton.IsPressed())
         {
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
