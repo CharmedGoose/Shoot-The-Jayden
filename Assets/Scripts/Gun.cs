@@ -74,13 +74,6 @@ public class Gun : MonoBehaviour
     void Update()
     {
         mouseLook.shot = false;
-        if (isReloading) return;
-
-        if (currentAmmo <= 0)
-        {
-            StartCoroutine(Reload());
-            return;
-        }
 
         if (Time.time >= nextTimeToFire && animator.GetBool("eject"))
         {
@@ -90,6 +83,14 @@ public class Gun : MonoBehaviour
         else if (animator.GetBool("eject"))
         {
             rightHand.position = rightHandEject.position;
+        }
+        
+        if (isReloading) return;
+
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
         }
 
         if (shootButton.IsPressed() && Time.time >= nextTimeToFire)
