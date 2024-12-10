@@ -1738,6 +1738,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1941596679}
   impactEffect: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
   bloodEffect: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  magazineBullet: {fileID: 0}
   bullet: {fileID: 0}
   bulletSpawn: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 25080b5e20e08fd4dafdecdf82027888, type: 3}
@@ -2489,6 +2490,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1533288653367896520, guid: 17eb81f5e4bc6d64d90344e9239f19fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 59357469}
+    - targetCorrespondingSourceObject: {fileID: 8624571318388205476, guid: 17eb81f5e4bc6d64d90344e9239f19fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063251040}
     - targetCorrespondingSourceObject: {fileID: 5936313723305149611, guid: 17eb81f5e4bc6d64d90344e9239f19fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 154878680}
@@ -2619,6 +2623,11 @@ Transform:
   - {fileID: 541239899}
   m_Father: {fileID: 553813866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &763554019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4109322224102266159, guid: 17eb81f5e4bc6d64d90344e9239f19fc, type: 3}
+  m_PrefabInstance: {fileID: 711806863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &771418998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3155,6 +3164,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4300533007854612, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
   m_PrefabInstance: {fileID: 1059705030}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1063251039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1063251040}
+  m_Layer: 8
+  m_Name: LeftHandReload
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1063251040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063251039}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5179608, y: -0.4798296, z: -0.4832451, w: 0.5176431}
+  m_LocalPosition: {x: -0.00051539735, y: 0.00026414503, z: -0.0001420714}
+  m_LocalScale: {x: 0.12615225, y: 0.12615225, z: 0.12615228}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 513952915}
+  m_LocalEulerAnglesHint: {x: 0.17, y: 0.22, z: -85.843}
 --- !u!1 &1079014708 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8554903847711023037, guid: 2ec604ea7d4cfb946b031c78977e73b6, type: 3}
@@ -4990,7 +5030,7 @@ MonoBehaviour:
   range: 1000
   fireRate: 1
   maxAmmo: 10
-  reloadTime: 10
+  reloadTime: 6
   hasRecoil: 1
   recoilHorizontal:
     serializedVersion: 2
@@ -5023,11 +5063,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   recoilTimeInterval: 0.1
-  bulletEjectDelay: 0.4
+  bulletEjectDelay: 0.5
   animator: {fileID: 469107648}
   muzzleFlash: {fileID: 1726709471}
   impactEffect: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
   bloodEffect: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  magazineBullet: {fileID: 763554019}
   bullet: {fileID: 8091934342544867244, guid: 072b09f469defef4a91d31f821873a7b, type: 3}
   bulletSpawn: {fileID: 2055409328}
   shootSound: {fileID: 8300000, guid: e5a60eac8c6e66443b22b20792e78a0b, type: 3}
@@ -5035,7 +5076,7 @@ MonoBehaviour:
   leftHandIK: {fileID: 965100460}
   leftHand: {fileID: 2146259771}
   leftHandDefault: {fileID: 59357469}
-  leftHandReload: {fileID: 0}
+  leftHandReload: {fileID: 1063251040}
   rightHandIK: {fileID: 1747640297}
   rightHand: {fileID: 716115547}
   rightHandDefault: {fileID: 1505363836}

@@ -37,7 +37,7 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed += ctx =>
         {
-            if (animator.GetBool("eject") || resume) return;
+            if (animator.GetBool("eject") || animator.GetBool("isReloading") || resume) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
@@ -53,7 +53,7 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed -= ctx =>
         {
-            if (animator.GetBool("eject") || resume) return;
+            if (animator.GetBool("eject") || animator.GetBool("isReloading") || resume) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
@@ -67,16 +67,16 @@ public class Scope : MonoBehaviour
 
     void Update()
     {
-        if (!scopeButton.IsPressed() || animator.GetBool("eject"))
+        if (!scopeButton.IsPressed() || animator.GetBool("eject") || animator.GetBool("isReloading"))
         {
-            if(animator.GetBool("eject") && animator.GetBool("isScoped"))
+            if((animator.GetBool("eject") || animator.GetBool("isReloading")) && animator.GetBool("isScoped"))
             {
                 resume = true;
             }
             animator.SetBool("isScoped", false);
             OnUnscope();
         }
-        if(resume && !animator.GetBool("eject") && scopeButton.IsPressed())
+        if(resume && !animator.GetBool("eject") && !animator.GetBool("isReloading") && scopeButton.IsPressed())
         {
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());

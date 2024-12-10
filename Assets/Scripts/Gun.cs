@@ -28,6 +28,7 @@ public class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject bloodEffect;
+    public GameObject magazineBullet;
     public GameObject bullet;
     public Transform bulletSpawn;
     public AudioClip shootSound;
@@ -85,7 +86,11 @@ public class Gun : MonoBehaviour
             rightHand.position = rightHandEject.position;
         }
         
-        if (isReloading) return;
+        if (isReloading) 
+        {
+            leftHand.position = leftHandReload.position;
+            return;
+        };
 
         if (currentAmmo <= 0)
         {
@@ -161,8 +166,15 @@ public class Gun : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        yield return new WaitForSeconds(reloadTime);
+        if (currentAmmo == 0) magazineBullet.SetActive(false);
+        animator.SetBool("isReloading", true);
+        leftHand.position = leftHandReload.position;
+        yield return new WaitForSeconds(reloadTime / 2);
+        magazineBullet.SetActive(true);
+        yield return new WaitForSeconds(reloadTime / 2);
         currentAmmo = maxAmmo;
+        animator.SetBool("isReloading", false);
+        leftHand.position = leftHandDefault.position;
         isReloading = false;
     }
 
