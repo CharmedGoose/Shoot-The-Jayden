@@ -21,7 +21,7 @@ public class WeaponSwitcher : MonoBehaviour
             {
                 weapon.gameObject.SetActive(true);
             }
-            else
+            else if (weapon.name != "Hands")
             {
                 weapon.gameObject.SetActive(false);
             }

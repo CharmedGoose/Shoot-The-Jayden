@@ -69,6 +69,8 @@ public class Gun : MonoBehaviour
         shootButton = InputSystem.actions.FindAction("Shoot");
         cameraTransform = Camera.main.transform;
         currentAmmo = maxAmmo;
+        leftHand.position = leftHandDefault.position;
+        rightHand.position = rightHandDefault.position;
         layerMask = ~LayerMask.GetMask("Player");
     }
 
@@ -183,5 +185,6 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(bulletEjectDelay);
         bulletCasing = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
         bulletCasing.GetComponentInChildren<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
+        Destroy(bulletCasing, 5f);
     }
 }

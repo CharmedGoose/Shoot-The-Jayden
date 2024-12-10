@@ -19,6 +19,7 @@ public class Scope : MonoBehaviour
 
     Camera mainCamera;
     MouseLook mouseLook;
+    WeaponSwitcher weaponSwitcher;
     GameObject weaponCamera;
     Animator animator;
     InputAction scopeButton;
@@ -29,6 +30,7 @@ public class Scope : MonoBehaviour
         defaultFOV = mainCamera.fieldOfView;
         animator = GetComponent<Animator>();
         mouseLook = mainCamera.GetComponent<MouseLook>();
+        weaponSwitcher = GetComponent<WeaponSwitcher>();
         weaponCamera = transform.parent.Find("WeaponCamera").gameObject;
         scopeButton = InputSystem.actions.FindAction("Aim");
     }
@@ -37,13 +39,24 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed += ctx =>
         {
-            if (animator.GetBool("eject") || animator.GetBool("isReloading") || resume) return;
+            if (animator.GetBool("isReloading") || resume) return;
+            if (weaponSwitcher.selectedWeapon == 1)
+            {
+                animator.SetBool("isVectorScoped", true);
+                return;
+            }
+            if (animator.GetBool("eject")) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
 
         scopeButton.canceled += ctx =>
         {
+            if (weaponSwitcher.selectedWeapon == 1)
+            {
+                animator.SetBool("isVectorScoped", false);
+                return;
+            }
             animator.SetBool("isScoped", false);
             OnUnscope();
         };
@@ -53,13 +66,24 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed -= ctx =>
         {
-            if (animator.GetBool("eject") || animator.GetBool("isReloading") || resume) return;
+            if (animator.GetBool("isReloading") || resume) return;
+            if (weaponSwitcher.selectedWeapon == 1)
+            {
+                animator.SetBool("isVectorScoped", true);
+                return;
+            }
+            if (animator.GetBool("eject")) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
         };
 
         scopeButton.canceled -= ctx =>
         {
+            if (weaponSwitcher.selectedWeapon == 1)
+            {
+                animator.SetBool("isVectorScoped", false);
+                return;
+            }
             animator.SetBool("isScoped", false);
             OnUnscope();
         };
@@ -67,17 +91,34 @@ public class Scope : MonoBehaviour
 
     void Update()
     {
-        if (!scopeButton.IsPressed() || animator.GetBool("eject") || animator.GetBool("isReloading"))
+        if (!scopeButton.IsPressed() || animator.GetBool("isReloading") || animator.GetBool("eject") && weaponSwitcher.selectedWeapon != 1)
         {
-            if((animator.GetBool("eject") || animator.GetBool("isReloading")) && animator.GetBool("isScoped"))
+            if ((animator.GetBool("eject") || animator.GetBool("isReloading")) && animator.GetBool("isScoped"))
             {
                 resume = true;
             }
+
             animator.SetBool("isScoped", false);
             OnUnscope();
         }
-        if(resume && !animator.GetBool("eject") && !animator.GetBool("isReloading") && scopeButton.IsPressed())
+        if ((!scopeButton.IsPressed() || animator.GetBool("isReloading")) && weaponSwitcher.selectedWeapon == 1)
         {
+            if (animator.GetBool("isReloading") && animator.GetBool("isVectorScoped"))
+            {
+                resume = true;
+            }
+            animator.SetBool("isVectorScoped", false);
+            return;
+        }
+        if (resume && !animator.GetBool("isReloading") && scopeButton.IsPressed())
+        {
+            if (weaponSwitcher.selectedWeapon == 1)
+            {
+                animator.SetBool("isVectorScoped", true);
+                resume = false;
+                return;
+            }
+            if (animator.GetBool("eject")) return;
             animator.SetBool("isScoped", true);
             StartCoroutine(OnScope());
             resume = false;

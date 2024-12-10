@@ -7,6 +7,5 @@ public class ShellCollide : MonoBehaviour
     void OnCollisionEnter()
     {
         AudioSource.PlayClipAtPoint(shellHitSound, transform.position);
-        Destroy(transform.parent.gameObject, shellHitSound.length + 1f);
     }
 }
