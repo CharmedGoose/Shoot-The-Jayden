@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-
     public enum DrawMode { NoiseMap, ColourMap, Mesh, FalloffMap };
+    [Header("Settings")]
     public DrawMode drawMode;
 
     public Noise.NormalizeMode normalizeMode;
@@ -41,7 +41,7 @@ public class MapGenerator : MonoBehaviour
 
     float[,] noiseMap;
 
-    Color[] colourMap;
+    Color32[] colourMap;
 
     void Awake()
     {
@@ -104,7 +104,7 @@ public class MapGenerator : MonoBehaviour
     {
         noiseMap = Noise.GenerateNoiseMap(MapChunkSize + 2, MapChunkSize + 2, seed, noiseScale, octaves, persistance, lacunarity, center + offset, normalizeMode);
 
-        colourMap = new Color[MapChunkSize * MapChunkSize];
+        colourMap = new Color32[MapChunkSize * MapChunkSize];
         for (int y = 0; y < MapChunkSize; y++)
         {
             for (int x = 0; x < MapChunkSize; x++)
@@ -169,9 +169,9 @@ public struct TerrainType
 public struct MapData
 {
     public readonly float[,] heightMap;
-    public readonly Color[] colourMap;
+    public readonly Color32[] colourMap;
 
-    public MapData(float[,] heightMap, Color[] colourMap)
+    public MapData(float[,] heightMap, Color32[] colourMap)
     {
         this.heightMap = heightMap;
         this.colourMap = colourMap;

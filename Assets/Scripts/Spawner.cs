@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [Header("Settings")]
     public float amountToSpawn = 10;
+
+    [Header("References")]
     public GameObject Object;
     void Start()
     {

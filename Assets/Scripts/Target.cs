@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    [Header("Settings")]
     public float health = 100f;
 
     public void TakeDamage(float amount)

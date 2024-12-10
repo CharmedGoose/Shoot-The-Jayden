@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
 {
-    
+    [Header("Settings")]
     public int selectedWeapon = 0;
 
     void Start()
