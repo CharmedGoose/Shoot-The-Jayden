@@ -5,6 +5,9 @@ public class Target : MonoBehaviour
     [Header("Settings")]
     public float health = 100f;
 
+    [Header("References")]
+    public TMPro.TextMeshProUGUI text;
+
     public void TakeDamage(float amount)
     {
         health -= amount;
@@ -18,5 +21,6 @@ public class Target : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        JaydenCounter.RemoveJayden(text);
     }
 }

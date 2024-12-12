@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     public GameObject Object;
     void Start()
     {
+        JaydenCounter.JaydenCount = 0;
         for (int i = 0; i < amountToSpawn; i++)
         {
             Instantiate(Object, new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325)), Quaternion.identity);
