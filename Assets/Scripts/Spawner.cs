@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
         JaydenCounter.JaydenCount = 0;
         for (int i = 0; i < amountToSpawn; i++)
         {
-            Instantiate(Object, new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325)), Quaternion.identity, GameObject.Find("Jayden").transform).name = "Jayden" + i + 1;
+            Instantiate(Object, new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325)), Quaternion.identity, GameObject.Find("Jaydens").transform).name = "Jayden" + (i + 1);
         }
     }
 }
