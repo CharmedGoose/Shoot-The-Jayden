@@ -51,8 +51,8 @@ public class MouseLook : MonoBehaviour
 
         mousePosition = mouse.ReadValue<Vector2>();
 
-        mouseX = mousePosition.x * currentSensitivity * Time.deltaTime;
-        mouseY = mousePosition.y * currentSensitivity * Time.deltaTime;
+        mouseX = mousePosition.x * currentSensitivity;
+        mouseY = mousePosition.y * currentSensitivity;
 
         //https://discussions.unity.com/t/weapon-recoil/831478/2
         if (shot)

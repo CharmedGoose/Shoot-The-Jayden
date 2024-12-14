@@ -1,16 +1,17 @@
+using System;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Settings")]
+    public float timeAmount = 300;
 
-    // Update is called once per frame
+    [Header("References")]
+    public TMPro.TextMeshProUGUI timerText;
+
     void Update()
     {
-        
+        timeAmount -= Time.deltaTime;
+        timerText.text = TimeSpan.FromSeconds(timeAmount).ToString(@"mm\:ss");
     }
 }
