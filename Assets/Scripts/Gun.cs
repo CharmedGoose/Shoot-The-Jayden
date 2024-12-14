@@ -37,6 +37,7 @@ public class Gun : MonoBehaviour
     public MouseLook mouseLook;
     public TextMeshProUGUI ammoText;
     [HideInInspector] public List<GameObject> bulletCasings = new();
+    [HideInInspector] public List<GameObject> impacts = new();
 
     [Header("IK")]
     public TwoBoneIKConstraint leftHandIK;
@@ -156,9 +157,13 @@ public class Gun : MonoBehaviour
                 }
             }
 
-            impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-
-            Destroy(impact, 0.75f);
+            impact = GetObjectFromPool(impacts);
+            if (impact != null)
+            {
+                impact.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(hit.normal));
+                impact.SetActive(true);
+                StartCoroutine(DisableObject(impact, 0.75f));
+            }
 
             if (hit.transform.CompareTag("Jayden"))
             {
@@ -173,18 +178,6 @@ public class Gun : MonoBehaviour
         animator.SetBool("eject", true);
         rightHand.position = rightHandEject.position;
         StartCoroutine(Eject());
-    }
-
-    GameObject GetBulletCasing()
-    {
-        for (int i = 0; i < bulletCasings.Count; i++)
-        {
-            if(!bulletCasings[i].activeInHierarchy)
-            {
-                return bulletCasings[i];
-            }
-        }
-        return null;
     }
 
     IEnumerator Reload()
@@ -206,7 +199,7 @@ public class Gun : MonoBehaviour
     IEnumerator Eject()
     {
         yield return new WaitForSeconds(bulletEjectDelay);
-        bulletCasing = GetBulletCasing();
+        bulletCasing = GetObjectFromPool(bulletCasings);
         if (bulletCasing == null) yield break;
         bulletRigidbody = bulletCasing.GetComponent<Rigidbody>();
         bulletRigidbody.linearVelocity = Vector3.zero;
@@ -214,12 +207,25 @@ public class Gun : MonoBehaviour
         bulletCasing.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
         bulletCasing.SetActive(true);
         bulletRigidbody.AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
-        StartCoroutine(DisableBulletCasing(bulletCasing));
-    }
-
-    IEnumerator DisableBulletCasing(GameObject bulletCasing)
-    {
         yield return new WaitForSeconds(5f);
         bulletCasing.SetActive(false);
+    }
+
+    IEnumerator DisableObject(GameObject gameObject, float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
+    }
+
+    GameObject GetObjectFromPool(List<GameObject> objectPool)
+    {
+        for (int i = 0; i < objectPool.Count; i++)
+        {
+            if (!objectPool[i].activeInHierarchy)
+            {
+                return objectPool[i];
+            }
+        }
+        return null;
     }
 }

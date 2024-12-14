@@ -7,6 +7,9 @@ public class WeaponSwitcher : MonoBehaviour
     [Header("Settings")]
     public int selectedWeapon = 0;
 
+    GameObject bulletCasing;
+    GameObject impact;
+
     void Start()
     {
         SelectWeapon();
@@ -15,13 +18,17 @@ public class WeaponSwitcher : MonoBehaviour
             if (weapon.name != "Hands")
             {
                 Gun gun = weapon.GetComponent<Gun>();
-                GameObject parent = new(weapon.name + "BulletCasings");
+                GameObject objectParent = new("ObjectPool");
                 for (int i = 0; i < gun.maxAmmo * 3; i++)
                 {
-                    GameObject bulletCasing = Instantiate(gun.bullet, Vector3.zero, Quaternion.identity);
-                    bulletCasing.transform.SetParent(parent.transform);
+                    bulletCasing = Instantiate(gun.bullet, Vector3.zero, Quaternion.identity);
+                    impact = Instantiate(gun.impactEffect, Vector3.zero, Quaternion.identity);
+                    bulletCasing.transform.SetParent(objectParent.transform);
+                    impact.transform.SetParent(objectParent.transform);
                     bulletCasing.SetActive(false);
+                    impact.SetActive(false);
                     gun.bulletCasings.Add(bulletCasing);
+                    gun.impacts.Add(impact);
                 }
             }
         }
