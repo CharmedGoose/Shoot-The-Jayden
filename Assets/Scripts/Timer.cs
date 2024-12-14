@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class Timer : MonoBehaviour
     public float timeAmount = 300;
 
     [Header("References")]
-    public TMPro.TextMeshProUGUI timerText;
+    public TextMeshProUGUI timerText;
 
     void Update()
     {

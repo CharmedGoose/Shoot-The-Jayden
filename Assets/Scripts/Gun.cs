@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Animations.Rigging;
+using TMPro;
 
 public class Gun : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class Gun : MonoBehaviour
     public Transform bulletSpawn;
     public AudioClip shootSound;
     public MouseLook mouseLook;
+    public TextMeshProUGUI ammoText;
 
     [Header("IK")]
     public TwoBoneIKConstraint leftHandIK;
@@ -63,12 +65,15 @@ public class Gun : MonoBehaviour
     Transform cameraTransform;
 
     InputAction shootButton;
+    InputAction reloadButton;
 
     void Awake()
     {
         shootButton = InputSystem.actions.FindAction("Shoot");
+        reloadButton = InputSystem.actions.FindAction("Reload");
         cameraTransform = Camera.main.transform;
         currentAmmo = maxAmmo;
+        ammoText.text = $"{currentAmmo} / {maxAmmo}";
         leftHand.position = leftHandDefault.position;
         rightHand.position = rightHandDefault.position;
         layerMask = ~LayerMask.GetMask("Player");
@@ -94,7 +99,7 @@ public class Gun : MonoBehaviour
             return;
         };
 
-        if (currentAmmo <= 0)
+        if (currentAmmo <= 0 || (reloadButton.IsPressed() && currentAmmo < maxAmmo))
         {
             StartCoroutine(Reload());
             return;
@@ -115,6 +120,7 @@ public class Gun : MonoBehaviour
         AudioSource.PlayClipAtPoint(shootSound, muzzleFlash.transform.position);
 
         currentAmmo--;
+        ammoText.text = $"{currentAmmo} / {maxAmmo}";
 
         if (Physics.Raycast(cameraTransform.position, transform.forward, out hit, range, layerMask))
         {
@@ -175,6 +181,7 @@ public class Gun : MonoBehaviour
         magazineBullet.SetActive(true);
         yield return new WaitForSeconds(reloadTime / 2);
         currentAmmo = maxAmmo;
+        ammoText.text = $"{currentAmmo} / {maxAmmo}";
         animator.SetBool("isReloading", false);
         leftHand.position = leftHandDefault.position;
         isReloading = false;
