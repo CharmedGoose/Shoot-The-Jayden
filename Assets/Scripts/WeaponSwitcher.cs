@@ -10,6 +10,21 @@ public class WeaponSwitcher : MonoBehaviour
     void Start()
     {
         SelectWeapon();
+        foreach (Transform weapon in transform)
+        {
+            if (weapon.name != "Hands")
+            {
+                Gun gun = weapon.GetComponent<Gun>();
+                GameObject parent = new(weapon.name + "BulletCasings");
+                for (int i = 0; i < gun.maxAmmo * 2; i++)
+                {
+                    GameObject bulletCasing = Instantiate(gun.bullet, Vector3.zero, Quaternion.identity);
+                    bulletCasing.transform.SetParent(parent.transform);
+                    bulletCasing.SetActive(false);
+                    gun.bulletCasings.Add(bulletCasing);
+                }
+            }
+        }
     }
 
     public void SelectWeapon()

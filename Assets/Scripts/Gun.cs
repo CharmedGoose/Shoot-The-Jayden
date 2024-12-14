@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Animations.Rigging;
 using TMPro;
+using System.Collections.Generic;
 
 public class Gun : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class Gun : MonoBehaviour
     public AudioClip shootSound;
     public MouseLook mouseLook;
     public TextMeshProUGUI ammoText;
+    [HideInInspector] public List<GameObject> bulletCasings = new();
 
     [Header("IK")]
     public TwoBoneIKConstraint leftHandIK;
@@ -171,6 +173,18 @@ public class Gun : MonoBehaviour
         StartCoroutine(Eject());
     }
 
+    GameObject GetBulletCasing()
+    {
+        for (int i = 0; i < bulletCasings.Count; i++)
+        {
+            if(!bulletCasings[i].activeInHierarchy)
+            {
+                return bulletCasings[i];
+            }
+        }
+        return null;
+    }
+
     IEnumerator Reload()
     {
         isReloading = true;
@@ -190,8 +204,16 @@ public class Gun : MonoBehaviour
     IEnumerator Eject()
     {
         yield return new WaitForSeconds(bulletEjectDelay);
-        bulletCasing = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
-        bulletCasing.GetComponentInChildren<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
-        Destroy(bulletCasing, 5f);
+        bulletCasing = GetBulletCasing();
+        bulletCasing.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
+        bulletCasing.SetActive(true);
+        bulletCasing.GetComponent<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
+        StartCoroutine(DisableBulletCasing(bulletCasing));
+    }
+
+    IEnumerator DisableBulletCasing(GameObject bulletCasing)
+    {
+        yield return new WaitForSeconds(5f);
+        bulletCasing.SetActive(false);
     }
 }
