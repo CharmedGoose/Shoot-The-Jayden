@@ -16,7 +16,7 @@ public class WeaponSwitcher : MonoBehaviour
             {
                 Gun gun = weapon.GetComponent<Gun>();
                 GameObject parent = new(weapon.name + "BulletCasings");
-                for (int i = 0; i < gun.maxAmmo * 2; i++)
+                for (int i = 0; i < gun.maxAmmo * 3; i++)
                 {
                     GameObject bulletCasing = Instantiate(gun.bullet, Vector3.zero, Quaternion.identity);
                     bulletCasing.transform.SetParent(parent.transform);

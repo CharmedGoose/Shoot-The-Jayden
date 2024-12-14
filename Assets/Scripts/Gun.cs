@@ -58,6 +58,8 @@ public class Gun : MonoBehaviour
 
     GameObject bulletCasing;
 
+    Rigidbody bulletRigidbody;
+
     bool isReloading = false;
 
     float nextTimeToFire = 0f;
@@ -205,9 +207,13 @@ public class Gun : MonoBehaviour
     {
         yield return new WaitForSeconds(bulletEjectDelay);
         bulletCasing = GetBulletCasing();
+        if (bulletCasing == null) yield break;
+        bulletRigidbody = bulletCasing.GetComponent<Rigidbody>();
+        bulletRigidbody.linearVelocity = Vector3.zero;
+        bulletRigidbody.angularVelocity = Vector3.zero;
         bulletCasing.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
         bulletCasing.SetActive(true);
-        bulletCasing.GetComponent<Rigidbody>().AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
+        bulletRigidbody.AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
         StartCoroutine(DisableBulletCasing(bulletCasing));
     }
 
