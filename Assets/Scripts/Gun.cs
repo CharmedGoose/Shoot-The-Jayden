@@ -65,6 +65,8 @@ public class Gun : MonoBehaviour
 
     float nextTimeToFire = 0f;
 
+    bool hitHead;
+
     int layerMask;
 
     Transform cameraTransform;
@@ -76,29 +78,24 @@ public class Gun : MonoBehaviour
     {
         shootButton = InputSystem.actions.FindAction("Shoot");
         reloadButton = InputSystem.actions.FindAction("Reload");
+
         cameraTransform = Camera.main.transform;
+
         currentAmmo = maxAmmo;
         ammoText.text = $"{currentAmmo} / {maxAmmo}";
+
         leftHand.position = leftHandDefault.position;
         rightHand.position = rightHandDefault.position;
+
         layerMask = ~LayerMask.GetMask("Player");
     }
 
     void Update()
     {
         mouseLook.shot = false;
+        if (animator.GetBool("eject")) Ejecting();
 
-        if (Time.time >= nextTimeToFire && animator.GetBool("eject"))
-        {
-            animator.SetBool("eject", false);
-            rightHand.position = rightHandDefault.position;
-        }
-        else if (animator.GetBool("eject"))
-        {
-            rightHand.position = rightHandEject.position;
-        }
-        
-        if (isReloading) 
+        if (isReloading)
         {
             leftHand.position = leftHandReload.position;
             return;
@@ -129,86 +126,99 @@ public class Gun : MonoBehaviour
 
         if (Physics.Raycast(cameraTransform.position, transform.forward, out hit, range, layerMask))
         {
-            if (hit.transform.CompareTag("Head") && headshotInstantKill)
+            hitHead = hit.transform.CompareTag("Head");
+
+            target = hitHead ? hit.transform.GetComponentInParent<Target>() : hit.transform.GetComponent<Target>();
+
+            if (target != null)
             {
-                target = hit.transform.parent.GetComponent<Target>();
-                if (target != null)
-                {
+                if (hitHead && headshotInstantKill) 
+                { 
                     target.TakeDamage(9999);
-                }
-            }
-            else
-            {
-                if (hit.transform.CompareTag("Head"))
-                {
-                    target = hit.transform.parent.GetComponent<Target>();
-                    if (target != null)
-                    {
-                        target.TakeDamage(damage);
-                    }
                 }
                 else
                 {
-                    target = hit.transform.GetComponent<Target>();
-                    if (target != null)
-                    {
-                        target.TakeDamage(damage);
-                    }
+                    target.TakeDamage(damage);
                 }
             }
 
-            impact = GetObjectFromPool(impacts);
-            if (impact != null)
+            if (hit.transform.CompareTag("Jayden") || hitHead)
             {
-                impact.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(hit.normal));
-                impact.SetActive(true);
-                StartCoroutine(DisableObject(impact, 0.75f));
+                Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal), hitHead ? hit.transform.parent : hit.transform);
             }
-
-            if (hit.transform.CompareTag("Jayden"))
+            else
             {
-                Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-            }
-            else if (hit.transform.CompareTag("Head"))
-            {
-                Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal), hit.transform.parent);
+                impact = GetObjectFromPool(impacts);
+                if (impact != null)
+                {
+                    impact.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(hit.normal));
+                    impact.SetActive(true);
+                    StartCoroutine(DisableObject(impact, 0.75f));
+                }
             }
         }
 
-        animator.SetBool("eject", true);
-        rightHand.position = rightHandEject.position;
         StartCoroutine(Eject());
     }
 
     IEnumerator Reload()
     {
         isReloading = true;
+
         if (currentAmmo == 0) magazineBullet.SetActive(false);
+
         animator.SetBool("isReloading", true);
         leftHand.position = leftHandReload.position;
+
         yield return new WaitForSeconds(reloadTime / 2);
         magazineBullet.SetActive(true);
         yield return new WaitForSeconds(reloadTime / 2);
+
         currentAmmo = maxAmmo;
         ammoText.text = $"{currentAmmo} / {maxAmmo}";
+
         animator.SetBool("isReloading", false);
         leftHand.position = leftHandDefault.position;
+
         isReloading = false;
     }
 
     IEnumerator Eject()
     {
+        animator.SetBool("eject", true);
+        rightHand.position = rightHandEject.position;
+
         yield return new WaitForSeconds(bulletEjectDelay);
+
         bulletCasing = GetObjectFromPool(bulletCasings);
         if (bulletCasing == null) yield break;
+
         bulletRigidbody = bulletCasing.GetComponent<Rigidbody>();
         bulletRigidbody.linearVelocity = Vector3.zero;
         bulletRigidbody.angularVelocity = Vector3.zero;
+
         bulletCasing.transform.SetPositionAndRotation(bulletSpawn.position, bulletSpawn.rotation);
+
         bulletCasing.SetActive(true);
+
         bulletRigidbody.AddForce(bulletSpawn.right * 5f, ForceMode.Impulse);
+
         yield return new WaitForSeconds(5f);
+
         bulletCasing.SetActive(false);
+    }
+
+    void Ejecting()
+    {
+        if (Time.time >= nextTimeToFire)
+        {
+            animator.SetBool("eject", false);
+            rightHand.position = rightHandDefault.position;
+        }
+        else
+        {
+            rightHand.position = rightHandEject.position;
+        }
     }
 
     IEnumerator DisableObject(GameObject gameObject, float time)
