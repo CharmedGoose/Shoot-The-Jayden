@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DayNightCycle : MonoBehaviour
 {
@@ -18,10 +19,12 @@ public class DayNightCycle : MonoBehaviour
         if (directionalLight.transform.eulerAngles.x > dayThreshold)
         {
             RenderSettings.skybox = nightSkybox;
+            RenderSettings.ambientMode = AmbientMode.Flat;
         }
         else
         {
             RenderSettings.skybox = daySkybox;
+            RenderSettings.ambientMode = AmbientMode.Skybox;
         }
     }
 }

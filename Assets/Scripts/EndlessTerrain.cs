@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 public class EndlessTerrain : MonoBehaviour
 {
@@ -122,6 +123,7 @@ public class EndlessTerrain : MonoBehaviour
             meshFilter = meshObject.AddComponent<MeshFilter>();
             meshCollider = meshObject.AddComponent<MeshCollider>();
             meshRenderer.material = material;
+            meshRenderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
             meshObject.transform.position = positionV3 * scale;
             meshObject.transform.parent = parent;
