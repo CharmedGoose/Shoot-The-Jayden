@@ -36,6 +36,8 @@ public class Gun : MonoBehaviour
     public AudioClip shootSound;
     public MouseLook mouseLook;
     public TextMeshProUGUI ammoText;
+    public GameObject hitMarker;
+    public AudioClip hitSound;
     [HideInInspector] public List<GameObject> bulletCasings = new();
     [HideInInspector] public List<GameObject> impacts = new();
 
@@ -140,6 +142,10 @@ public class Gun : MonoBehaviour
                 {
                     target.TakeDamage(damage);
                 }
+
+                hitMarker.SetActive(true);
+                AudioSource.PlayClipAtPoint(hitSound, muzzleFlash.transform.position);
+                StartCoroutine(DisableObject(hitMarker, 0.5f));
             }
 
             if (hit.transform.CompareTag("Jayden") || hitHead)
