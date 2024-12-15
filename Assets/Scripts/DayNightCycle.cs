@@ -30,6 +30,7 @@ public class DayNightCycle : MonoBehaviour
             RenderSettings.ambientLight = new Color(0f, 0f, 0f);
             lightComponent.color = new Color(1f, 0f, 0f);
             playerLight.SetActive(true);
+            JaydenCounter.targetPlayer = true;
         }
         else
         {

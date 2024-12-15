@@ -63,6 +63,8 @@ public class Gun : MonoBehaviour
 
     Rigidbody bulletRigidbody;
 
+    UnityEngine.UI.Image[] hitMarkers;
+
     bool isReloading = false;
 
     float nextTimeToFire = 0f;
@@ -90,6 +92,7 @@ public class Gun : MonoBehaviour
         rightHand.position = rightHandDefault.position;
 
         layerMask = ~LayerMask.GetMask("Player");
+        hitMarkers = hitMarker.GetComponentsInChildren<UnityEngine.UI.Image>();
     }
 
     void Update()
@@ -137,9 +140,18 @@ public class Gun : MonoBehaviour
                 if (hitHead && headshotInstantKill) 
                 { 
                     target.TakeDamage(9999);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        hitMarkers[i].color = Color.red;
+                    }
                 }
                 else
                 {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (target.health - damage <= 0) hitMarkers[i].color = Color.red;
+                        else hitMarkers[i].color = Color.white;
+                    }
                     target.TakeDamage(damage);
                 }
 

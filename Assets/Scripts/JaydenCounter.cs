@@ -2,6 +2,8 @@ public static class JaydenCounter
 {
     public static int JaydenCount;
 
+    public static bool targetPlayer = false;
+
     public static void RemoveJayden(TMPro.TextMeshProUGUI text)
     {
         JaydenCount++;
