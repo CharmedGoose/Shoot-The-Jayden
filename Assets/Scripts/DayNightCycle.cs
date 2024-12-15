@@ -9,6 +9,8 @@ public class DayNightCycle : MonoBehaviour
 
     [Header("References")]
     public Transform directionalLight;
+    public GameObject playerLight;
+
     public Material daySkybox;
     public Material nightSkybox;
 
@@ -25,14 +27,16 @@ public class DayNightCycle : MonoBehaviour
         if (directionalLight.transform.eulerAngles.x > dayThreshold)
         {
             RenderSettings.skybox = nightSkybox;
-            lightComponent.color = new Color(0f, 0f, 0f);
             RenderSettings.ambientLight = new Color(0f, 0f, 0f);
+            lightComponent.color = new Color(0f, 100f, 100f);
+            playerLight.SetActive(true);
         }
         else
         {
             RenderSettings.skybox = daySkybox;
-            lightComponent.color = new Color(0, 100, 100);
             RenderSettings.ambientLight = new Color(0.3113208f, 0.3039783f, 0.3039783f);
+            lightComponent.color = new Color(1f, 1f, 1f);
+            playerLight.SetActive(false);
         }
     }
 }
