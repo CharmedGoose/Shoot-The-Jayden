@@ -28,7 +28,7 @@ public class DayNightCycle : MonoBehaviour
         {
             RenderSettings.skybox = nightSkybox;
             RenderSettings.ambientLight = new Color(0f, 0f, 0f);
-            lightComponent.color = new Color(0f, 100f, 100f);
+            lightComponent.color = new Color(1f, 0f, 0f);
             playerLight.SetActive(true);
         }
         else
