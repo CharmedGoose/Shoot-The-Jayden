@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class DayNightCycle : MonoBehaviour
 {
@@ -13,18 +12,27 @@ public class DayNightCycle : MonoBehaviour
     public Material daySkybox;
     public Material nightSkybox;
 
+    Light lightComponent;
+
+    void Start()
+    {
+        lightComponent = directionalLight.GetComponent<Light>();
+    }
+
     void Update()
     {
         directionalLight.transform.Rotate(speed * Time.deltaTime * Vector3.right);
         if (directionalLight.transform.eulerAngles.x > dayThreshold)
         {
             RenderSettings.skybox = nightSkybox;
-            RenderSettings.ambientMode = AmbientMode.Flat;
+            lightComponent.color = new Color(0f, 0f, 0f);
+            RenderSettings.ambientLight = new Color(0f, 0f, 0f);
         }
         else
         {
             RenderSettings.skybox = daySkybox;
-            RenderSettings.ambientMode = AmbientMode.Skybox;
+            lightComponent.color = new Color(1, 1, 1);
+            RenderSettings.ambientLight = new Color(0.3113208f, 0.3039783f, 0.3039783f);
         }
     }
 }
