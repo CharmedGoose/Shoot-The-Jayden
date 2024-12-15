@@ -31,7 +31,7 @@ public class DayNightCycle : MonoBehaviour
         else
         {
             RenderSettings.skybox = daySkybox;
-            lightComponent.color = new Color(1, 1, 1);
+            lightComponent.color = new Color(0, 100, 100);
             RenderSettings.ambientLight = new Color(0.3113208f, 0.3039783f, 0.3039783f);
         }
     }
