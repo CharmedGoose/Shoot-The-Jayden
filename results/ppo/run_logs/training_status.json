@@ -1,0 +1,29 @@
+{
+    "Jayden": {
+        "checkpoints": [
+            {
+                "steps": 108416,
+                "file_path": "results\\ppo\\Jayden\\Jayden-108416.onnx",
+                "reward": null,
+                "creation_time": 1734308856.5840516,
+                "auxillary_file_paths": [
+                    "results\\ppo\\Jayden\\Jayden-108416.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 108416,
+            "file_path": "results\\ppo\\Jayden.onnx",
+            "reward": null,
+            "creation_time": 1734308856.5840516,
+            "auxillary_file_paths": [
+                "results\\ppo\\Jayden\\Jayden-108416.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
