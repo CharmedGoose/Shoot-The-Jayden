@@ -47,13 +47,6 @@ public class JaydenAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
         float x = actions.ContinuousActions[0];
         float z = actions.ContinuousActions[1];
 
@@ -64,6 +57,16 @@ public class JaydenAgent : Agent
         if (actions.DiscreteActions[0] == 0 && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
+
+    void Update()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
         }
 
         velocity.y += gravity * Time.deltaTime;
