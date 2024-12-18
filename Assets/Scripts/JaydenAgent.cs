@@ -2,6 +2,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class JaydenAgent : Agent
 {
@@ -14,10 +15,13 @@ public class JaydenAgent : Agent
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    [Header("References")]
-    Transform player;
-    MapGenerator mapGenerator;
+    [Header("Walls")]
+    public Transform[] walls;
 
+    [Header("References")]
+    public Transform player;
+    public MapGenerator mapGenerator;
+    
     float moveX;
     float moveZ;
 
@@ -27,8 +31,13 @@ public class JaydenAgent : Agent
 
     CharacterController controller;
 
+    InputAction moveControls;
+    InputAction jump;
+
     void Start()
     {
+        moveControls = InputSystem.actions.FindAction("Move");
+        jump = InputSystem.actions.FindAction("Jump");
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("GroundCheck");
     }
@@ -58,6 +67,17 @@ public class JaydenAgent : Agent
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+        ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+
+        continuousActions[0] = moveControls.ReadValue<Vector2>().x;
+        continuousActions[1] = moveControls.ReadValue<Vector2>().y;
+
+        discreteActions[0] = jump.IsPressed() ? 0 : 1;
     }
 
     void Update()
