@@ -8,9 +8,9 @@ public class WeaponSwitcher : MonoBehaviour
     public int selectedWeapon = 0;
 
     [Header("References")]
-    MouseLook mouseLook;
-    JaydenAgent jaydenAgent;
-    PlayerAgent playerAgent;
+    public MouseLook mouseLook;
+    public JaydenAgent jaydenAgent;
+    public PlayerAgent playerAgent;
 
     GameObject bulletCasing;
     GameObject impact;

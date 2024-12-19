@@ -25,6 +25,7 @@ public class JaydenAgent : Agent
     public Transform player;
     public MapGenerator mapGenerator;
     public Gun gun;
+    public Timer timer;
     
     Vector3 move;
 
@@ -138,6 +139,11 @@ public class JaydenAgent : Agent
         {
             AddReward(1f);
             gun.hasMissed = false;
+        }
+
+        if (timer.timeAmount <= 0)
+        {
+            AddReward(-10f);
         }
     }
 

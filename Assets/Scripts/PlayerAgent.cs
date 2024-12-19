@@ -31,6 +31,7 @@ public class PlayerAgent : Agent
     public List<Transform> jaydens;
     public MapGenerator mapGenerator;
     public Gun gun;
+    public Timer timer;
 
     Vector3 velocity;
     Transform groundCheck;
@@ -59,6 +60,7 @@ public class PlayerAgent : Agent
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
         mapGenerator.seed = Random.Range(0, 100000);
+        timer.timeAmount = 300;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -123,10 +125,10 @@ public class PlayerAgent : Agent
         }
         else
         {
-            AddReward(-5f);
+            AddReward(-0.5f);
         }
 
-        AddReward(-0.5f);
+        AddReward(-1f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -152,6 +154,12 @@ public class PlayerAgent : Agent
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (timer.timeAmount <= 0)
+        {
+            AddReward(-10f);
+            End();
+        }
     }
 
     public void End()
