@@ -40,6 +40,8 @@ public class JaydenAgent : Agent
     CharacterController controller;
     Target target;
 
+    PlayerAgent playerAgent;
+
     InputAction moveControls;
     InputAction jump;
 
@@ -49,6 +51,7 @@ public class JaydenAgent : Agent
         jump = InputSystem.actions.FindAction("Jump");
         controller = GetComponent<CharacterController>();
         target = GetComponent<Target>();
+        playerAgent = player.GetComponent<PlayerAgent>();
         groundCheck = transform.Find("GroundCheck");
 
         lastHealth = target.health;
@@ -57,8 +60,6 @@ public class JaydenAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
-        player.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
-        mapGenerator.seed = Random.Range(0, 100000);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -86,13 +87,13 @@ public class JaydenAgent : Agent
         if (GetNorthWallDistance() < 10 || GetEastWallDistance() < 10 || GetSouthWallDistance() < 10 || GetWestWallDistance() < 10)
         {
             AddReward(-1f);
-            EndEpisode();
+            playerAgent.End();
         }
 
         if (Vector3.Distance(transform.position, player.position) < 50)
         {
             AddReward(-2.5f);
-            EndEpisode();
+            playerAgent.End();
         }
 
         AddReward(0.1f);
@@ -127,7 +128,7 @@ public class JaydenAgent : Agent
             AddReward(-(lastHealth - target.health * 0.1f));
             if (target.health <= 0)
             {
-                EndEpisode();
+                playerAgent.End();
             }
 
             lastHealth = target.health;
@@ -138,11 +139,11 @@ public class JaydenAgent : Agent
             AddReward(1f);
             gun.hasMissed = false;
         }
+    }
 
-        if (gun.currentAmmo <= 0)
-        {
-            AddReward(0.5f);
-        }
+    public void End()
+    {
+        EndEpisode();
     }
 
     float GetNorthWallDistance() => northWall.position.z - transform.position.z;

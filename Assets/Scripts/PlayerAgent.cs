@@ -58,10 +58,6 @@ public class PlayerAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
-        for (int i = 0; i < jaydens.Count; i++)
-        {
-            jaydens[i].position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
-        }
         mapGenerator.seed = Random.Range(0, 100000);
     }
 
@@ -75,7 +71,7 @@ public class PlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        rotationY = actions.ContinuousActions[0];
+        rotationY = actions.ContinuousActions[0] * sensitivity;
         moveZ = actions.ContinuousActions[1];
 
         move = transform.forward * moveZ;
@@ -83,7 +79,7 @@ public class PlayerAgent : Agent
         transform.Rotate(Vector3.up * rotationY);
         controller.Move(speed * Time.deltaTime * move.normalized);
 
-        rotationX -= actions.ContinuousActions[2];
+        rotationX -= actions.ContinuousActions[2] * sensitivity;
         rotationX = Mathf.Clamp(rotationX, -90f, 90f);
 
         head.localRotation = Quaternion.Euler(rotationX, headRotationY, 0f);
@@ -93,21 +89,44 @@ public class PlayerAgent : Agent
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
+        if (actions.DiscreteActions[1] == 1)
+        {
+            gun.isShooting = true;
+        }
+        else
+        {
+            gun.isShooting = false;
+        }
+
+        if (actions.DiscreteActions[2] == 1)
+        {
+            StartCoroutine(gun.Reload());
+        }
+
         if (GetNorthWallDistance() < 10 || GetEastWallDistance() < 10 || GetSouthWallDistance() < 10 || GetWestWallDistance() < 10)
         {
             AddReward(-1f);
-            EndEpisode();
+            End();
         }
 
         for (int i = 0; i < jaydens.Count; i++)
         {
             if (Vector3.Distance(transform.position, jaydens[i].position) < 100)
             {
-                AddReward(5f);
+                AddReward(1f);
             }
         }
 
-        AddReward(-0.1f);
+        if (!gun.hasMissed)
+        {
+            AddReward(10f);
+        }
+        else
+        {
+            AddReward(-5f);
+        }
+
+        AddReward(-0.5f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -133,6 +152,15 @@ public class PlayerAgent : Agent
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void End()
+    {
+        EndEpisode();
+        for (int i = 0; i < jaydens.Count; i++)
+        {
+            jaydens[i].GetComponent<JaydenAgent>().End();
+        }
     }
 
     float GetNorthWallDistance() => northWall.position.z - transform.position.z;

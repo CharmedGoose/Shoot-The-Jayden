@@ -28,6 +28,7 @@ public class Gun : MonoBehaviour
 
     [HideInInspector] public bool isTraining = false;
     [HideInInspector] public bool hasMissed = false;
+    [HideInInspector] public bool isShooting = false;
 
     [Header("References")]
     public Animator animator;
@@ -108,13 +109,13 @@ public class Gun : MonoBehaviour
             return;
         };
 
-        if (currentAmmo <= 0 || (reloadButton.IsPressed() && currentAmmo < maxAmmo))
+        if (currentAmmo <= 0 || (reloadButton.IsPressed() && currentAmmo < maxAmmo && !isTraining))
         {
             StartCoroutine(Reload());
             return;
         }
 
-        if (shootButton.IsPressed() && Time.time >= nextTimeToFire)
+        if ((shootButton.IsPressed() || isShooting)  && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
@@ -182,7 +183,7 @@ public class Gun : MonoBehaviour
         StartCoroutine(Eject());
     }
 
-    IEnumerator Reload()
+    public IEnumerator Reload()
     {
         isReloading = true;
 
