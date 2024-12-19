@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour
     public float fireRate = 15f;
 
     public float maxAmmo = 10f;
+    public float currentAmmo;
     public float reloadTime = 1f;
 
     public bool hasRecoil = true;
@@ -24,6 +25,8 @@ public class Gun : MonoBehaviour
     public float recoilTimeInterval = 0.25f;
 
     public float bulletEjectDelay = 0.1f;
+
+    [HideInInspector] public bool hasMissed = false;
 
     [Header("References")]
     public Animator animator;
@@ -50,8 +53,6 @@ public class Gun : MonoBehaviour
     public Transform rightHand;
     public Transform rightHandDefault;
     public Transform rightHandEject;
-
-    float currentAmmo;
 
     Target target;
 
@@ -159,6 +160,7 @@ public class Gun : MonoBehaviour
                 AudioSource.PlayClipAtPoint(hitSound, muzzleFlash.transform.position);
                 StartCoroutine(DisableObject(hitMarker, 0.5f));
             }
+            else hasMissed = true;
 
             if (hit.transform.CompareTag("Jayden") || hitHead)
             {
