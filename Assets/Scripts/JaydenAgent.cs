@@ -141,8 +141,8 @@ public class JaydenAgent : Agent
         }
     }
 
-    float GetNorthWallDistance() => northWall.position.z - player.position.z;
-    float GetEastWallDistance() => eastWall.position.x - player.position.x;
-    float GetSouthWallDistance() => Mathf.Abs(southWall.position.z - player.position.z);
-    float GetWestWallDistance() => Mathf.Abs(westWall.position.x - player.position.x);
+    float GetNorthWallDistance() => northWall.position.z - transform.position.z;
+    float GetEastWallDistance() => eastWall.position.x - transform.position.x;
+    float GetSouthWallDistance() => Mathf.Abs(southWall.position.z - transform.position.z);
+    float GetWestWallDistance() => Mathf.Abs(westWall.position.x - transform.position.x);
 }
