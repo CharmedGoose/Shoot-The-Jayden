@@ -26,6 +26,7 @@ public class Gun : MonoBehaviour
 
     public float bulletEjectDelay = 0.1f;
 
+    [HideInInspector] public bool isTraining = false;
     [HideInInspector] public bool hasMissed = false;
 
     [Header("References")]

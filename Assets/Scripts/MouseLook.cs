@@ -47,8 +47,6 @@ public class MouseLook : MonoBehaviour
     {   
         if (mouse == null) return;
 
-        gun = transform.parent.GetComponentInChildren<Gun>();
-
         mousePosition = mouse.ReadValue<Vector2>();
 
         mouseX = mousePosition.x * currentSensitivity;

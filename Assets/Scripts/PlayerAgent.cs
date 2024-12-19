@@ -33,7 +33,7 @@ public class PlayerAgent : Agent
 
     Vector3 move;
 
-    float moveX;
+    float rotationY;
     float moveZ;
 
     CharacterController controller;
@@ -69,11 +69,12 @@ public class PlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        moveX = actions.ContinuousActions[0];
+        rotationY = actions.ContinuousActions[0];
         moveZ = actions.ContinuousActions[1];
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        move = transform.forward * moveZ;
 
+        transform.Rotate(Vector3.up * rotationY);
         controller.Move(speed * Time.deltaTime * move.normalized);
 
         if (actions.DiscreteActions[0] == 1 && isGrounded)
@@ -91,7 +92,7 @@ public class PlayerAgent : Agent
         {
             if (Vector3.Distance(transform.position, jaydens[i].position) < 100)
             {
-                AddReward(1f);
+                AddReward(5f);
             }
         }
 

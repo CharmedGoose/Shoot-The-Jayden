@@ -26,7 +26,9 @@ public class JaydenAgent : Agent
     public MapGenerator mapGenerator;
     public Gun gun;
     
-    float moveX;
+    Vector3 move;
+
+    float rotationY;
     float moveZ;
 
     float lastHealth;
@@ -67,10 +69,12 @@ public class JaydenAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        moveX = actions.ContinuousActions[0];
+        rotationY = actions.ContinuousActions[0];
         moveZ = actions.ContinuousActions[1];
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        move = transform.forward * moveZ;
+
+        transform.Rotate(Vector3.up * rotationY);
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
