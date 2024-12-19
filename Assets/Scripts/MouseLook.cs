@@ -9,10 +9,8 @@ public class MouseLook : MonoBehaviour
     public float mouseSensitivity = 100f;
     public float mouseADSSensitivity = 50f;
     public float headRotationY;
-    [HideInInspector]
-    public float currentSensitivity;
-    [HideInInspector]
-    public bool shot = false;
+    [HideInInspector] public float currentSensitivity;
+    [HideInInspector] public bool shot = false;
 
     [Header("References")]
     public Transform body;

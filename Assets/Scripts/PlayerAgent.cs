@@ -9,8 +9,12 @@ public class PlayerAgent : Agent
 {
     [Header("Settings")]
     public float speed = 12f;
+    public float sensitivity = 100f;
+    public float ADSSensitivity = 50f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
+
+    public float headRotationY;
 
     [Header("Ground Check")]
     public float groundDistance = 0.4f;
@@ -23,6 +27,7 @@ public class PlayerAgent : Agent
     public Transform westWall;
 
     [Header("References")]
+    public Transform head;
     public List<Transform> jaydens;
     public MapGenerator mapGenerator;
     public Gun gun;
@@ -34,6 +39,7 @@ public class PlayerAgent : Agent
     Vector3 move;
 
     float rotationY;
+    float rotationX;
     float moveZ;
 
     CharacterController controller;
@@ -76,6 +82,11 @@ public class PlayerAgent : Agent
 
         transform.Rotate(Vector3.up * rotationY);
         controller.Move(speed * Time.deltaTime * move.normalized);
+
+        rotationX -= actions.ContinuousActions[2];
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+
+        head.localRotation = Quaternion.Euler(rotationX, headRotationY, 0f);
 
         if (actions.DiscreteActions[0] == 1 && isGrounded)
         {
