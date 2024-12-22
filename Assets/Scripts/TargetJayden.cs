@@ -61,9 +61,8 @@ public class TargetJayden : MonoBehaviour
 
         head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(direction), sensitivity);
 
-        RayPerceptionOutput.RayOutput rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs[0];
-
-        isJaydenVisible = rayOutput.HitTaggedObject;
+        isJaydenVisible = IsJaydenVisible();
+        Debug.Log(isJaydenVisible);
 
         direction.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), sensitivity);
@@ -98,6 +97,20 @@ public class TargetJayden : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    bool IsJaydenVisible()
+    {
+        RayPerceptionOutput.RayOutput[] rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs;
+
+        for (int i = 0; i < rayOutput.Length; i++)
+        {
+            if (rayOutput[i].HitTaggedObject)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // https://discussions.unity.com/t/clean-est-way-to-find-nearest-object-of-many-c/409917/4
