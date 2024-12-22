@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
 public class TargetJayden : MonoBehaviour
@@ -20,6 +21,7 @@ public class TargetJayden : MonoBehaviour
     [Header("References")]
     public Transform head;
     public Gun gun;
+    public RayPerceptionSensorComponent3D rayPerception;
 
     Vector3 velocity;
     Transform groundCheck;
@@ -57,25 +59,29 @@ public class TargetJayden : MonoBehaviour
         closestJayden = GetClosestJayden();
         direction = (closestJayden.position - transform.position).normalized;
 
-        isJaydenVisible = closestJayden.GetComponentInChildren<SkinnedMeshRenderer>().isVisible;
+        head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(direction), sensitivity);
+
+        RayPerceptionOutput.RayOutput rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs[0];
+
+        isJaydenVisible = rayOutput.HitTaggedObject;
+
+        direction.y = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), sensitivity);
 
         if (isJaydenVisible)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)), sensitivity);
-            head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(direction), sensitivity);
-            if (Random.Range(0, 10) == 0 && gun.nextTimeToFire <= Time.time)
+            if (Random.Range(0, 26) == 0 && gun.nextTimeToFire <= Time.time)
             {
                 gun.nextTimeToFire = Time.time + 1f / gun.fireRate;
                 gun.Shoot();
                 if (gun.hasRecoil) gun.mouseLook.shot = true;
             }
         }
-        else {
-            direction.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), sensitivity);
-
+        else 
+        {
             controller.Move(speed * Time.deltaTime * transform.forward);
         }
+
 
         if (isGrounded && velocity.y < 0)
         {
