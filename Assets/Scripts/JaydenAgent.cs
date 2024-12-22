@@ -115,7 +115,7 @@ public class JaydenAgent : Agent
         continuousActions[0] = moveControls.ReadValue<Vector2>().x;
         continuousActions[1] = moveControls.ReadValue<Vector2>().y;
 
-        discreteActions[0] = jump.IsPressed() ? 0 : 1;
+        discreteActions[0] = jump.IsPressed() ? 1 : 0;
     }
 
     void Update()

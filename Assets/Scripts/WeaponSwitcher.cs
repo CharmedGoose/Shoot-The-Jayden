@@ -11,6 +11,7 @@ public class WeaponSwitcher : MonoBehaviour
     public MouseLook mouseLook;
     public JaydenAgent jaydenAgent;
     public PlayerAgent playerAgent;
+    public TargetJayden targetJayden;
 
     GameObject bulletCasing;
     GameObject impact;
@@ -50,6 +51,7 @@ public class WeaponSwitcher : MonoBehaviour
                 mouseLook.gun = weapon.GetComponent<Gun>();
                 jaydenAgent.gun = weapon.GetComponent<Gun>();
                 playerAgent.gun = weapon.GetComponent<Gun>();
+                targetJayden.gun = weapon.GetComponent<Gun>();
             }
             else if (weapon.name != "Hands")
             {

@@ -70,7 +70,7 @@ public class Gun : MonoBehaviour
 
     bool isReloading = false;
 
-    float nextTimeToFire = 0f;
+    [HideInInspector] public float nextTimeToFire = 0f;
 
     bool hitHead;
 
@@ -124,7 +124,7 @@ public class Gun : MonoBehaviour
 
     }
 
-    void Shoot()
+    public void Shoot()
     {
         muzzleFlash.Play();
         AudioSource.PlayClipAtPoint(shootSound, muzzleFlash.transform.position);

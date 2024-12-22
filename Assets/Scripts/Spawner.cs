@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
     [Header("References")]
     public GameObject Object;
     public PlayerAgent playerAgent;
+    public TargetJayden targetJayden;
 
     void Start()
     {
@@ -20,6 +21,11 @@ public class Spawner : MonoBehaviour
             if (playerAgent != null)
             {
                 playerAgent.jaydens.Add(obj.transform);
+            }
+
+            if (targetJayden != null)
+            {
+                targetJayden.jaydens.Add(obj.transform);
             }
         }
     }
