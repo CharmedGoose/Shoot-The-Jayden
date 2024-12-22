@@ -26,7 +26,8 @@ public class JaydenAgent : Agent
     public MapGenerator mapGenerator;
     public Gun gun;
     public Timer timer;
-    
+    public RayPerceptionSensorComponent3D rayPerception;
+
     Vector3 move;
 
     float rotationY;
@@ -46,7 +47,7 @@ public class JaydenAgent : Agent
     InputAction moveControls;
     InputAction jump;
 
-    void Start()
+    protected override void Awake()
     {
         moveControls = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
@@ -61,13 +62,18 @@ public class JaydenAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
+        //target.health = 100f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
+        sensor.AddObservation(transform.rotation);
         sensor.AddObservation(player.position);
-
+        sensor.AddObservation((player.position - transform.position).normalized);
+        sensor.AddObservation(rayPerception);
+        sensor.AddObservation(target.health);
+        sensor.AddObservation(timer.timeAmount);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -91,10 +97,11 @@ public class JaydenAgent : Agent
             playerAgent.End();
         }
 
-        if (Vector3.Distance(transform.position, player.position) < 50)
+        if (target.health <= 0)
         {
-            AddReward(-2.5f);
+            AddReward(-10f);
             playerAgent.End();
+            target.health = 100f;
         }
 
         AddReward(0.1f);
@@ -127,15 +134,11 @@ public class JaydenAgent : Agent
         if (target.health < lastHealth)
         {
             AddReward(-(lastHealth - target.health * 0.1f));
-            if (target.health <= 0)
-            {
-                playerAgent.End();
-            }
 
             lastHealth = target.health;
         }
 
-        if (gun.hasMissed) 
+        if (gun.hasMissed)
         {
             AddReward(1f);
             gun.hasMissed = false;
@@ -144,6 +147,22 @@ public class JaydenAgent : Agent
         if (timer.timeAmount <= 0)
         {
             AddReward(-10f);
+        }
+
+        if (Vector3.Distance(transform.position, player.position) < 50)
+        {
+            AddReward(-2.5f);
+        }
+
+        RayPerceptionOutput.RayOutput rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs[0];
+
+        if (rayOutput.HasHit)
+        {
+            AddReward(-5f);
+        }
+        else
+        {
+            AddReward(0.5f);
         }
     }
 

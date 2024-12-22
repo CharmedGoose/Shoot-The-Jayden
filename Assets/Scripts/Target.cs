@@ -8,6 +8,7 @@ public class Target : MonoBehaviour
 
     [Header("References")]
     public TMPro.TextMeshProUGUI text;
+    public PlayerAgent playerAgent;
 
     public void TakeDamage(float amount)
     {

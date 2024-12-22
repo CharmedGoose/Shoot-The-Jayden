@@ -71,6 +71,7 @@ public class PlayerAgent : Agent
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
         mapGenerator.seed = Random.Range(0, 100000);
+        gun.currentAmmo = gun.maxAmmo;
         timer.timeAmount = 300;
     }
 
@@ -90,11 +91,12 @@ public class PlayerAgent : Agent
         {
             sensor.AddObservation(jaydens[i].position);
         }
+        sensor.AddObservation((GetClosestJayden().position - transform.position).normalized);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        rotationY = actions.ContinuousActions[0] * sensitivity;
-        moveZ = actions.ContinuousActions[1];
+        moveZ = actions.ContinuousActions[0];
+        rotationY = actions.ContinuousActions[1] * sensitivity;
 
         move = transform.forward * moveZ;
 
@@ -158,8 +160,8 @@ public class PlayerAgent : Agent
 
         mousePosition = mouse.ReadValue<Vector2>();
 
-        continuousActions[0] = mousePosition.x;
-        continuousActions[1] = moveControls.ReadValue<Vector2>().y;
+        continuousActions[0] = moveControls.ReadValue<Vector2>().y;
+        continuousActions[1] = mousePosition.x;
         continuousActions[2] = mousePosition.y;
 
         discreteActions[0] = jump.IsPressed() ? 1 : 0;
@@ -200,11 +202,31 @@ public class PlayerAgent : Agent
 
     public void End()
     {
-        EndEpisode();
         for (int i = 0; i < jaydens.Count; i++)
         {
             jaydens[i].GetComponent<JaydenAgent>().End();
         }
+        EndEpisode();
+    }
+
+    // https://discussions.unity.com/t/clean-est-way-to-find-nearest-object-of-many-c/409917/4
+    Transform GetClosestJayden()
+    {
+        Transform jayden = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform potentialTarget in jaydens)
+        {
+            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                jayden = potentialTarget;
+            }
+        }
+
+        return jayden;
     }
 
     float GetNorthWallDistance() => northWall.position.z - transform.position.z;
