@@ -26,12 +26,14 @@ public class PlayerAgent : Agent
     public Transform southWall;
     public Transform westWall;
 
+    public List<Transform> jaydens;
+
     [Header("References")]
     public Transform head;
-    public List<Transform> jaydens;
     public MapGenerator mapGenerator;
     public Gun gun;
     public Timer timer;
+    public RayPerceptionSensorComponent3D rayPerception;
 
     Vector3 velocity;
     Transform groundCheck;
@@ -43,15 +45,24 @@ public class PlayerAgent : Agent
     float rotationX;
     float moveZ;
 
+    Vector2 mousePosition;
+
     CharacterController controller;
 
     InputAction moveControls;
+    InputAction mouse;
     InputAction jump;
+    InputAction shoot;
+    InputAction reload;
 
     void Start()
     {
         moveControls = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
+        mouse = InputSystem.actions.FindAction("Look");
+        shoot = InputSystem.actions.FindAction("Shoot");
+        reload = InputSystem.actions.FindAction("Reload");
+
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("GroundCheck");
     }
@@ -66,6 +77,15 @@ public class PlayerAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
+        sensor.AddObservation(head.localRotation);
+        sensor.AddObservation(transform.rotation);
+        sensor.AddObservation(gun.currentAmmo);
+        sensor.AddObservation(timer.timeAmount);
+        sensor.AddObservation(GetNorthWallDistance());
+        sensor.AddObservation(GetEastWallDistance());
+        sensor.AddObservation(GetSouthWallDistance());
+        sensor.AddObservation(GetWestWallDistance());
+
         for (int i = 0; i < jaydens.Count; i++)
         {
             sensor.AddObservation(jaydens[i].position);
@@ -86,7 +106,7 @@ public class PlayerAgent : Agent
 
         head.localRotation = Quaternion.Euler(rotationX, headRotationY, 0f);
 
-        if (actions.DiscreteActions[0] == 1 && isGrounded)
+        if ((actions.DiscreteActions[0] == 1) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -107,7 +127,7 @@ public class PlayerAgent : Agent
 
         if (GetNorthWallDistance() < 10 || GetEastWallDistance() < 10 || GetSouthWallDistance() < 10 || GetWestWallDistance() < 10)
         {
-            AddReward(-1f);
+            AddReward(-5f);
             End();
         }
 
@@ -125,10 +145,10 @@ public class PlayerAgent : Agent
         }
         else
         {
-            AddReward(-0.5f);
+            AddReward(-3f);
         }
 
-        AddReward(-1f);
+        AddReward(-2f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -136,10 +156,15 @@ public class PlayerAgent : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
 
-        continuousActions[0] = moveControls.ReadValue<Vector2>().x;
-        continuousActions[1] = moveControls.ReadValue<Vector2>().y;
+        mousePosition = mouse.ReadValue<Vector2>();
 
-        discreteActions[0] = jump.IsPressed() ? 0 : 1;
+        continuousActions[0] = mousePosition.x;
+        continuousActions[1] = moveControls.ReadValue<Vector2>().y;
+        continuousActions[2] = mousePosition.y;
+
+        discreteActions[0] = jump.IsPressed() ? 1 : 0;
+        discreteActions[1] = shoot.IsPressed() ? 1 : 0;
+        discreteActions[2] = reload.IsPressed() ? 1 : 0;
     }
 
     void Update()
@@ -159,6 +184,17 @@ public class PlayerAgent : Agent
         {
             AddReward(-10f);
             End();
+        }
+
+        RayPerceptionOutput.RayOutput rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs[0];
+
+        if (rayOutput.HasHit)
+        {
+            AddReward(5f);
+        }
+        else
+        {
+            AddReward(-2f);
         }
     }
 

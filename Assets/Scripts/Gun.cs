@@ -132,7 +132,7 @@ public class Gun : MonoBehaviour
         currentAmmo--;
         ammoText.text = $"{currentAmmo} / {maxAmmo}";
 
-        if (Physics.Raycast(cameraTransform.position, transform.forward, out hit, range, layerMask))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range, layerMask))
         {
             hitHead = hit.transform.CompareTag("Head");
 
