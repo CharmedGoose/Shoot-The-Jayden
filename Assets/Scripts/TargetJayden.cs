@@ -102,7 +102,7 @@ public class TargetJayden : MonoBehaviour
         }
         transform.localPosition = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
         gun.currentAmmo = gun.maxAmmo;
-        if (mapGenerator) mapGenerator.seed = Random.Range(0, 100000);
+        if (mapGenerator != null) mapGenerator.seed = Random.Range(0, 100000);
         timer.timeAmount = 300;
     }
 

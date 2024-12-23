@@ -23,6 +23,7 @@ public class JaydenAgent : Agent
 
     [Header("References")]
     public Transform player;
+    public Transform playerShootPoint;
     public Timer timer;
     public RayPerceptionSensorComponent3D rayPerception;
     public Gun gun;
@@ -45,7 +46,6 @@ public class JaydenAgent : Agent
     RaycastHit hit;
 
     TargetJayden targetJayden;
-    Transform mainCamera;
 
     InputAction moveControls;
     InputAction jump;
@@ -60,8 +60,6 @@ public class JaydenAgent : Agent
         targetJayden = player.GetComponent<TargetJayden>();
 
         groundCheck = transform.Find("GroundCheck");
-
-        mainCamera = Camera.main.transform;
 
         lastHealth = target.health;
         layerMask = ~LayerMask.GetMask("Player");
@@ -164,12 +162,11 @@ public class JaydenAgent : Agent
         }
 
 
-        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 99999999, layerMask))
+        if (Physics.Raycast(playerShootPoint.position, playerShootPoint.forward, out hit, 99999999, layerMask))
         {
             if (hit.transform.CompareTag("Jayden") || hit.transform.CompareTag("Head"))
             {
                 AddReward(-0.5f);
-                Debug.Log("hit");
             }
             else
             {
