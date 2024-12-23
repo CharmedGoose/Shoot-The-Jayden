@@ -82,7 +82,7 @@ public class TargetJayden : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if ((((lastPosition == transform.position) && !isJaydenVisible) || Random.Range(0, 10001) == 0) && isGrounded)
+        if ((((lastPosition == transform.position) && !isJaydenVisible) || (Random.Range(0, 1001) == 0)) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
