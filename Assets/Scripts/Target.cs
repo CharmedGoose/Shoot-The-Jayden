@@ -23,6 +23,6 @@ public class Target : MonoBehaviour
     {
         if (isTraining) return;
         Destroy(gameObject);
-        JaydenCounter.RemoveJayden(text);
+        GameManager.instance.RemoveJayden(text);
     }
 }

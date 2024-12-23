@@ -100,7 +100,7 @@ public class TargetJayden : MonoBehaviour
         {
             jaydens[i].GetComponent<JaydenAgent>().End();
         }
-        transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
+        transform.position = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
         gun.currentAmmo = gun.maxAmmo;
         mapGenerator.seed = Random.Range(0, 100000);
         timer.timeAmount = 300;

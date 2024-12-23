@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResetOnFloorTouch : MonoBehaviour
 {
+
     GameObject jaydenMovement;
     void OnTriggerEnter(Collider collider)
     {
@@ -9,7 +10,7 @@ public class ResetOnFloorTouch : MonoBehaviour
         {
             jaydenMovement = collider.transform.parent.gameObject;
             jaydenMovement.SetActive(false);
-            jaydenMovement.transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
+            jaydenMovement.transform.position = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
             jaydenMovement.SetActive(true);
         }
     }
