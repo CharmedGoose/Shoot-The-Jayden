@@ -82,7 +82,7 @@ public class TargetJayden : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if ((((lastPosition == transform.position) && !isJaydenVisible) || (Random.Range(0, 1001) == 0)) && isGrounded)
+        if ((((lastPosition == transform.position) && !isJaydenVisible) || (Random.Range(0, 501) == 0)) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -102,7 +102,7 @@ public class TargetJayden : MonoBehaviour
         }
         transform.localPosition = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
         gun.currentAmmo = gun.maxAmmo;
-        mapGenerator.seed = Random.Range(0, 100000);
+        if (mapGenerator) mapGenerator.seed = Random.Range(0, 100000);
         timer.timeAmount = 300;
     }
 

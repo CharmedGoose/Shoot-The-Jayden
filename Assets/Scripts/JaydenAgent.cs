@@ -23,7 +23,6 @@ public class JaydenAgent : Agent
 
     [Header("References")]
     public Transform player;
-    public MapGenerator mapGenerator;
     public Timer timer;
     public RayPerceptionSensorComponent3D rayPerception;
     public Gun gun;
