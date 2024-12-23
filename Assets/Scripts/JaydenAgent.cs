@@ -70,7 +70,7 @@ public class JaydenAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
+        transform.localPosition = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
     }
 
     public override void CollectObservations(VectorSensor sensor)
