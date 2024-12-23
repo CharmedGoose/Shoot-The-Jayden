@@ -32,6 +32,7 @@ public class Gun : MonoBehaviour
 
     [Header("References")]
     public Animator animator;
+    public Transform shootPoint;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject bloodEffect;
@@ -74,8 +75,6 @@ public class Gun : MonoBehaviour
 
     int layerMask;
 
-    Transform cameraTransform;
-
     InputAction shootButton;
     InputAction reloadButton;
 
@@ -83,8 +82,6 @@ public class Gun : MonoBehaviour
     {
         shootButton = InputSystem.actions.FindAction("Shoot");
         reloadButton = InputSystem.actions.FindAction("Reload");
-
-        cameraTransform = Camera.main.transform;
 
         currentAmmo = maxAmmo;
         ammoText.text = $"{currentAmmo} / {maxAmmo}";
@@ -130,7 +127,7 @@ public class Gun : MonoBehaviour
         currentAmmo--;
         ammoText.text = $"{currentAmmo} / {maxAmmo}";
 
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range, layerMask))
+        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, range, layerMask))
         {
             hitHead = hit.transform.CompareTag("Head");
 
