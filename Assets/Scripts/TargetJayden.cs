@@ -29,11 +29,7 @@ public class TargetJayden : MonoBehaviour
 
     Vector3 direction;
 
-    Vector3 move;
-
-    float rotationY;
     float rotationX;
-    float moveZ;
 
     bool isJaydenVisible;
 
@@ -60,6 +56,7 @@ public class TargetJayden : MonoBehaviour
         direction = (closestJayden.position - transform.position).normalized;
 
         head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(direction), sensitivity);
+        head.localRotation = Quaternion.Euler(head.localRotation.eulerAngles.x, headRotationY, 0);
 
         isJaydenVisible = IsJaydenVisible();
         Debug.Log(isJaydenVisible);
