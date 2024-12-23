@@ -89,6 +89,11 @@ public class TargetJayden : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
+        if (Random.Range(0, 10001) == 0 && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
         lastPosition = transform.position;
 
         velocity.y += gravity * Time.deltaTime;
