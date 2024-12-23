@@ -39,8 +39,6 @@ public class JaydenAgent : Agent
 
     float lastHealth;
 
-    int framesSinceLastRay;
-
     int layerMask;
 
     CharacterController controller;
@@ -66,7 +64,6 @@ public class JaydenAgent : Agent
 
         mainCamera = Camera.main.transform;
 
-        framesSinceLastRay = 0;
         lastHealth = target.health;
         layerMask = ~LayerMask.GetMask("Player");
     }
