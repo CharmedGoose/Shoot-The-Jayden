@@ -20,16 +20,16 @@ public class TargetJayden : MonoBehaviour
 
     [Header("References")]
     public Transform head;
-    public Gun gun;
+    public MapGenerator mapGenerator;
+    public Timer timer;
     public RayPerceptionSensorComponent3D rayPerception;
+    public Gun gun;
 
     Vector3 velocity;
     Transform groundCheck;
     bool isGrounded;
 
     Vector3 direction;
-
-    float rotationX;
 
     bool isJaydenVisible;
 
@@ -39,17 +39,16 @@ public class TargetJayden : MonoBehaviour
 
     CharacterController controller;
 
-    Transform mainCamera;
-
     void Start()
     {
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("GroundCheck");
-        mainCamera = Camera.main.transform;
     }
 
     void Update()
     {
+        if (timer.timeAmount <= 0) End();
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         closestJayden = GetClosestJayden();
@@ -58,11 +57,10 @@ public class TargetJayden : MonoBehaviour
         head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(direction), sensitivity);
         head.localRotation = Quaternion.Euler(head.localRotation.eulerAngles.x, headRotationY, 0);
 
-        isJaydenVisible = IsJaydenVisible();
-        Debug.Log(isJaydenVisible);
-
         direction.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), sensitivity);
+
+        isJaydenVisible = IsJaydenVisible();
 
         if (isJaydenVisible)
         {
@@ -84,12 +82,7 @@ public class TargetJayden : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if ((lastPosition == transform.position) && isGrounded && !isJaydenVisible)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        if (Random.Range(0, 10001) == 0 && isGrounded)
+        if ((((lastPosition == transform.position) && !isJaydenVisible) || Random.Range(0, 10001) == 0) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -99,6 +92,18 @@ public class TargetJayden : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void End()
+    {
+        for (int i = 0; i < jaydens.Count; i++)
+        {
+            jaydens[i].GetComponent<JaydenAgent>().End();
+        }
+        transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
+        gun.currentAmmo = gun.maxAmmo;
+        mapGenerator.seed = Random.Range(0, 100000);
+        timer.timeAmount = 300;
     }
 
     bool IsJaydenVisible()
@@ -121,6 +126,7 @@ public class TargetJayden : MonoBehaviour
         Transform jayden = null;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
+
         foreach (Transform potentialTarget in jaydens)
         {
             Vector3 directionToTarget = potentialTarget.position - currentPosition;
@@ -131,7 +137,6 @@ public class TargetJayden : MonoBehaviour
                 jayden = potentialTarget;
             }
         }
-
         return jayden;
     }
 }

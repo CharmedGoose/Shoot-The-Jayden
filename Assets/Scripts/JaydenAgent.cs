@@ -24,25 +24,31 @@ public class JaydenAgent : Agent
     [Header("References")]
     public Transform player;
     public MapGenerator mapGenerator;
-    public Gun gun;
     public Timer timer;
     public RayPerceptionSensorComponent3D rayPerception;
+    public Gun gun;
 
     Vector3 move;
-
-    float rotationY;
     float moveZ;
 
-    float lastHealth;
+    float rotationY;
 
     Vector3 velocity;
     Transform groundCheck;
     bool isGrounded;
 
+    float lastHealth;
+
+    int framesSinceLastRay;
+
+    int layerMask;
+
     CharacterController controller;
     Target target;
+    RaycastHit hit;
 
-    PlayerAgent playerAgent;
+    TargetJayden targetJayden;
+    Transform mainCamera;
 
     InputAction moveControls;
     InputAction jump;
@@ -51,25 +57,32 @@ public class JaydenAgent : Agent
     {
         moveControls = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
+
         controller = GetComponent<CharacterController>();
         target = GetComponent<Target>();
-        playerAgent = player.GetComponent<PlayerAgent>();
+        targetJayden = player.GetComponent<TargetJayden>();
+
         groundCheck = transform.Find("GroundCheck");
 
+        mainCamera = Camera.main.transform;
+
+        framesSinceLastRay = 0;
         lastHealth = target.health;
+        layerMask = ~LayerMask.GetMask("Player");
     }
 
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325));
-        //target.health = 100f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
         sensor.AddObservation(transform.rotation);
+        sensor.AddObservation(isGrounded);
         sensor.AddObservation(player.position);
+        sensor.AddObservation(player.rotation);
         sensor.AddObservation((player.position - transform.position).normalized);
         sensor.AddObservation(rayPerception);
         sensor.AddObservation(target.health);
@@ -94,17 +107,17 @@ public class JaydenAgent : Agent
         if (GetNorthWallDistance() < 10 || GetEastWallDistance() < 10 || GetSouthWallDistance() < 10 || GetWestWallDistance() < 10)
         {
             AddReward(-1f);
-            playerAgent.End();
+            targetJayden.End();
         }
 
         if (target.health <= 0)
         {
             AddReward(-10f);
-            playerAgent.End();
+            targetJayden.End();
             target.health = 100f;
         }
 
-        AddReward(0.1f);
+        AddReward(0.02f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -154,16 +167,20 @@ public class JaydenAgent : Agent
             AddReward(-2.5f);
         }
 
-        RayPerceptionOutput.RayOutput rayOutput = RayPerceptionSensor.Perceive(rayPerception.GetRayPerceptionInput(), false).RayOutputs[0];
 
-        if (rayOutput.HasHit)
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 99999999, layerMask))
         {
-            AddReward(-5f);
+            if (hit.transform.CompareTag("Jayden") || hit.transform.CompareTag("Head"))
+            {
+                AddReward(-0.5f);
+                Debug.Log("hit");
+            }
+            else
+            {
+                AddReward(0.0001f);
+            }
         }
-        else
-        {
-            AddReward(0.5f);
-        }
+
     }
 
     public void End()

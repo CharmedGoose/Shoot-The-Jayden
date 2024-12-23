@@ -7,7 +7,6 @@ public class Spawner : MonoBehaviour
 
     [Header("References")]
     public GameObject Object;
-    public PlayerAgent playerAgent;
     public TargetJayden targetJayden;
 
     void Start()
@@ -17,11 +16,6 @@ public class Spawner : MonoBehaviour
         {
             GameObject obj = Instantiate(Object, new Vector3(Random.Range(-325, 325), 50, Random.Range(-325, 325)), Quaternion.identity, GameObject.Find("Jaydens").transform);
             obj.name = "Jayden " + (i + 1);
-            
-            if (playerAgent != null)
-            {
-                playerAgent.jaydens.Add(obj.transform);
-            }
 
             if (targetJayden != null)
             {

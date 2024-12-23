@@ -47,11 +47,9 @@ public class Gun : MonoBehaviour
     [HideInInspector] public List<GameObject> impacts = new();
 
     [Header("IK")]
-    public TwoBoneIKConstraint leftHandIK;
     public Transform leftHand;
     public Transform leftHandDefault;
     public Transform leftHandReload;
-    public TwoBoneIKConstraint rightHandIK;
     public Transform rightHand;
     public Transform rightHandDefault;
     public Transform rightHandEject;

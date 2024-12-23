@@ -10,7 +10,6 @@ public class WeaponSwitcher : MonoBehaviour
     [Header("References")]
     public MouseLook mouseLook;
     public JaydenAgent jaydenAgent;
-    public PlayerAgent playerAgent;
     public TargetJayden targetJayden;
 
     GameObject bulletCasing;
@@ -50,7 +49,6 @@ public class WeaponSwitcher : MonoBehaviour
                 weapon.gameObject.SetActive(true);
                 mouseLook.gun = weapon.GetComponent<Gun>();
                 jaydenAgent.gun = weapon.GetComponent<Gun>();
-                playerAgent.gun = weapon.GetComponent<Gun>();
                 targetJayden.gun = weapon.GetComponent<Gun>();
             }
             else if (weapon.name != "Hands")

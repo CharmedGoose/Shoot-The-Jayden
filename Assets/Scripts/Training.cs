@@ -9,6 +9,7 @@ public class Training : MonoBehaviour
     void Start()
     {
         GetComponent<PlayerMovement>().enabled = false;
+        GetComponent<TargetJayden>().enabled = true;
         playerCamera.GetComponent<MouseLook>().enabled = false;
         foreach (Transform weapon in weaponHolder)
         {
