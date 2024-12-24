@@ -20,10 +20,10 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-    max_steps: 1e7
+    max_steps: 2e31
     time_horizon: 64
     summary_freq: 10000
-engine_settings:
-  time_scale: 1.0
-  target_frame_rate: -1
-  capture_frame_rate: 0
+#engine_settings:
+#  time_scale: 1.0
+#  target_frame_rate: -1
+#  capture_frame_rate: 0
