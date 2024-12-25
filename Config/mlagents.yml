@@ -21,7 +21,7 @@ behaviors:
         gamma: 0.99
         strength: 1.0
     max_steps: 2e31
-    time_horizon: 64
+    time_horizon: 128
     summary_freq: 10000
 engine_settings:
   time_scale: 1.0
