@@ -65,6 +65,7 @@ public class TargetJayden : MonoBehaviour
         if (isJaydenVisible)
         {
             if (gun.isReloading) return;
+            if (timer.timeAmount >= 290) return;
             if (Random.Range(0, 26) == 0 && gun.nextTimeToFire <= Time.time)
             {
                 gun.nextTimeToFire = Time.time + 1f / gun.fireRate;
