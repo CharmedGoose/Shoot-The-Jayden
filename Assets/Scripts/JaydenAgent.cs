@@ -81,7 +81,6 @@ public class JaydenAgent : Agent
         sensor.AddObservation((transform.position - player.position).normalized);
         sensor.AddObservation(Vector3.Distance(transform.position, player.position));
         sensor.AddObservation(Physics.Raycast(playerShootPoint.position, playerShootPoint.forward, out hit, 99999999, layerMask) ? 1 : 0);
-        sensor.AddObservation(timer.timeAmount);
         sensor.AddObservation(gun.currentAmmo);
     }
     public override void OnActionReceived(ActionBuffers actions)
@@ -139,6 +138,16 @@ public class JaydenAgent : Agent
                 rotationY = 0;
                 break;
         }
+
+        if (discreteActions[1] == lastAction)
+        {
+            AddReward(-1f);
+        }
+        else
+        {
+            AddReward(1f);
+        }
+        lastAction = discreteActions[0];
 
         move = transform.forward * moveZ;
 
