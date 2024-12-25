@@ -33,6 +33,9 @@ public class JaydenAgent : Agent
 
     float rotationY;
 
+    ActionSegment<int> discreteActions;
+    int lastAction;
+
     Vector3 velocity;
     Transform groundCheck;
     bool isGrounded;
@@ -78,14 +81,80 @@ public class JaydenAgent : Agent
         sensor.AddObservation(player.position);
         sensor.AddObservation(player.rotation);
         sensor.AddObservation((player.position - transform.position).normalized);
+        sensor.AddObservation(Vector3.Distance(transform.position, player.position));
         sensor.AddObservation(rayPerception);
         sensor.AddObservation(target.health);
         sensor.AddObservation(timer.timeAmount);
+        sensor.AddObservation(GetNorthWallDistance());
+        sensor.AddObservation(GetEastWallDistance());
+        sensor.AddObservation(GetSouthWallDistance());
+        sensor.AddObservation(GetWestWallDistance());
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        rotationY = actions.ContinuousActions[0];
-        moveZ = actions.ContinuousActions[1];
+        discreteActions = actions.DiscreteActions;
+
+        if (lastAction == discreteActions[0])
+        {
+            AddReward(-2f);
+        }
+        else
+        {
+            AddReward(0.75f);
+        }
+
+        lastAction = discreteActions[0];
+
+        moveZ = actions.ContinuousActions[0];
+
+        if (moveZ >= 0)
+        {
+            AddReward(0.75f);
+        }
+        else
+        {
+            AddReward(-1.75f);
+        }
+
+        Debug.Log(moveZ);
+
+        // this is not ai pls don't flag me
+        switch (discreteActions[0])
+        {
+            case 0:
+                rotationY = 1;
+                break;
+            case 1:
+                rotationY = 3;
+                break;
+            case 2:
+                rotationY = 5;
+                break;
+            case 3:
+                rotationY = 10;
+                break;
+            case 4:
+                rotationY = 15;
+                break;
+            case 5:
+                rotationY = -1;
+                break;
+            case 6:
+                rotationY = -3;
+                break;
+            case 7:
+                rotationY = -5;
+                break;
+            case 8:
+                rotationY = -10;
+                break;
+            case 9:
+                rotationY = -15;
+                break;
+            case 10:
+                rotationY = 0;
+                break;
+        }
 
         move = transform.forward * moveZ;
 
@@ -93,15 +162,26 @@ public class JaydenAgent : Agent
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
-        if (actions.DiscreteActions[0] == 1 && isGrounded)
+        /**if (Vector3.Distance(transform.position, player.position) < 100)
+        {
+            AddReward(-5f);
+        }
+        else
+        {
+            AddReward(0.1f);
+        }
+
+        if (actions.DiscreteActions[1] == 1 && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            AddReward(0.1f);
         }
 
         if (GetNorthWallDistance() < 10 || GetEastWallDistance() < 10 || GetSouthWallDistance() < 10 || GetWestWallDistance() < 10)
         {
             AddReward(-1f);
             targetJayden.End();
+            return;
         }
 
         if (target.health <= 0)
@@ -109,9 +189,35 @@ public class JaydenAgent : Agent
             AddReward(-10f);
             targetJayden.End();
             target.health = 100f;
+            return;
         }
 
-        AddReward(0.02f);
+        if (Physics.Raycast(playerShootPoint.position, playerShootPoint.forward, out hit, 99999999, layerMask))
+        {
+            if (hit.transform.CompareTag("Jayden") || hit.transform.CompareTag("Head"))
+            {
+                AddReward(-1f);
+            }
+            else
+            {
+                AddReward(0.1f);
+            }
+        }
+
+        if (target.health < lastHealth)
+        {
+            AddReward(-(lastHealth - target.health * 0.1f));
+
+            lastHealth = target.health;
+        }
+
+        if (gun.hasMissed)
+        {
+            AddReward(1f);
+            gun.hasMissed = false;
+        }**/
+
+        //AddReward(1f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -119,10 +225,10 @@ public class JaydenAgent : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
 
-        continuousActions[0] = moveControls.ReadValue<Vector2>().x;
-        continuousActions[1] = moveControls.ReadValue<Vector2>().y;
+        continuousActions[0] = moveControls.ReadValue<Vector2>().y;
 
-        discreteActions[0] = jump.IsPressed() ? 1 : 0;
+        discreteActions[0] = moveControls.ReadValue<Vector2>().x > 0 ? 5 : -5;
+        discreteActions[1] = jump.IsPressed() ? 1 : 0;
     }
 
     void Update()
@@ -138,42 +244,10 @@ public class JaydenAgent : Agent
 
         controller.Move(velocity * Time.deltaTime);
 
-        if (target.health < lastHealth)
-        {
-            AddReward(-(lastHealth - target.health * 0.1f));
-
-            lastHealth = target.health;
-        }
-
-        if (gun.hasMissed)
-        {
-            AddReward(1f);
-            gun.hasMissed = false;
-        }
-
         if (timer.timeAmount <= 0)
         {
-            AddReward(-10f);
+            AddReward(10f);
         }
-
-        if (Vector3.Distance(transform.position, player.position) < 50)
-        {
-            AddReward(-2.5f);
-        }
-
-
-        if (Physics.Raycast(playerShootPoint.position, playerShootPoint.forward, out hit, 99999999, layerMask))
-        {
-            if (hit.transform.CompareTag("Jayden") || hit.transform.CompareTag("Head"))
-            {
-                AddReward(-0.5f);
-            }
-            else
-            {
-                AddReward(0.0001f);
-            }
-        }
-
     }
 
     public void End()

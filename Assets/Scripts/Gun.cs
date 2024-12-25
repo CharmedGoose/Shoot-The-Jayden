@@ -67,7 +67,7 @@ public class Gun : MonoBehaviour
 
     UnityEngine.UI.Image[] hitMarkers;
 
-    bool isReloading = false;
+    [HideInInspector] public bool isReloading = false;
 
     [HideInInspector] public float nextTimeToFire = 0f;
 

@@ -18688,6 +18688,7 @@ MonoBehaviour:
   rightHand: {fileID: 102418212673057936}
   rightHandDefault: {fileID: 1262154483783583862}
   rightHandEject: {fileID: 1262154483783583862}
+  isReloading: 0
   nextTimeToFire: 0
 --- !u!1 &7416645085432653151
 GameObject:
@@ -24522,11 +24523,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 21
+    VectorObservationSize: 26
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 2
-      BranchSizes: 02000000
+      m_NumContinuousActions: 1
+      BranchSizes: 0b00000002000000
     VectorActionSize: 
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
@@ -24709,6 +24710,7 @@ MonoBehaviour:
   rightHand: {fileID: 102418212673057936}
   rightHandDefault: {fileID: 2884097849527243135}
   rightHandEject: {fileID: 5757043259428533183}
+  isReloading: 0
   nextTimeToFire: 0
 --- !u!1 &8058742230189307571
 GameObject:
