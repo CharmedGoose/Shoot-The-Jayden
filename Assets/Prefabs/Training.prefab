@@ -14183,7 +14183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
-  sensitivity: 0.1
+  sensitivity: 0.5
   gravity: -19.62
   jumpHeight: 3
   headRotationY: -45

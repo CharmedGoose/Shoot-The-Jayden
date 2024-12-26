@@ -40,8 +40,6 @@ public class JaydenAgent : Agent
     Transform groundCheck;
     bool isGrounded;
 
-    float lastHealth;
-
     int layerMask;
 
     CharacterController controller;
@@ -64,7 +62,6 @@ public class JaydenAgent : Agent
 
         groundCheck = transform.Find("GroundCheck");
 
-        lastHealth = target.health;
         layerMask = ~LayerMask.GetMask("Player");
     }
 
@@ -155,6 +152,15 @@ public class JaydenAgent : Agent
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
+        if (Vector3.Distance(transform.position, player.position) < 100)
+        {
+            AddReward(-1f);
+        }
+        else
+        {
+            AddReward(1f);
+        }
+
         if (actions.DiscreteActions[2] == 1 && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -197,7 +203,7 @@ public class JaydenAgent : Agent
             }
         }
 
-        AddReward(-1.1f);
+        AddReward(-2.5f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
