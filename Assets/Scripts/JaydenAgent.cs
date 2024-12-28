@@ -46,7 +46,7 @@ public class JaydenAgent : Agent
     Target target;
     RaycastHit hit;
 
-    TargetJayden targetJayden;
+    //TargetJayden targetJayden;
 
     InputAction moveControls;
     InputAction jump;
@@ -58,7 +58,7 @@ public class JaydenAgent : Agent
 
         controller = GetComponent<CharacterController>();
         target = GetComponent<Target>();
-        targetJayden = player.GetComponent<TargetJayden>();
+        //targetJayden = player.GetComponent<TargetJayden>();
 
         groundCheck = transform.Find("GroundCheck");
 
@@ -67,7 +67,7 @@ public class JaydenAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
+        //transform.localPosition = new Vector3(Random.Range(-GameManager.instance.spawnX, GameManager.instance.spawnX), 50, Random.Range(-GameManager.instance.spawnZ, GameManager.instance.spawnZ));
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -163,24 +163,26 @@ public class JaydenAgent : Agent
         if (target.health <= 0)
         {
             AddReward(-10f);
-            targetJayden.End();
-            target.health = 100f;
+            //targetJayden.End();
+            //target.health = 100f;
             return;
         }
 
         if (gun.currentAmmo <= 0)
         {
             AddReward(10f);
-            targetJayden.End();
-            gun.currentAmmo = gun.maxAmmo;
+            //targetJayden.End();
+            //gun.currentAmmo = gun.maxAmmo;
             return;
         }
 
         if (timer.timeAmount <= 0)
         {
             AddReward(10f);
-            targetJayden.End();
-            timer.timeAmount = 300;
+            enabled = false;
+            GetComponent<TargetPlayer>().enabled = true;
+            //targetJayden.End();
+            //timer.timeAmount = 300;
             return;
         }
 
@@ -201,7 +203,6 @@ public class JaydenAgent : Agent
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
 
         discreteActions[0] = (int)moveControls.ReadValue<Vector2>().y;
@@ -227,9 +228,4 @@ public class JaydenAgent : Agent
     {
         EndEpisode();
     }
-
-    float GetNorthWallDistance() => northWall.position.z - transform.position.z;
-    float GetEastWallDistance() => eastWall.position.x - transform.position.x;
-    float GetSouthWallDistance() => Mathf.Abs(southWall.position.z - transform.position.z);
-    float GetWestWallDistance() => Mathf.Abs(westWall.position.x - transform.position.x);
 }

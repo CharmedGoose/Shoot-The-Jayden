@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour
 
     public void AddJayden(TextMeshProUGUI text)
     {
-        JaydenCount++;
+        JaydenCount--;
         text.text = $"<b>Objective:</b>\nShoot Jaydens: {JaydenCount} / 10";
     }
     public void RemoveJayden(TextMeshProUGUI text)
     {
-        JaydenCount--;
+        JaydenCount++;
         text.text = $"<b>Objective:</b>\nShoot Jaydens: {JaydenCount} / 10";
     }
 

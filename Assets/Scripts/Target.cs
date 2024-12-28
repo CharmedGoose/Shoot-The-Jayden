@@ -4,6 +4,7 @@ public class Target : MonoBehaviour
 {
     [Header("Settings")]
     public float health = 100f;
+    public bool isInvincible = false;
     public bool isTraining = false;
 
     [Header("References")]
@@ -11,6 +12,8 @@ public class Target : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        if (isInvincible) return;
+        
         health -= amount;
 
         if (health <= 0f)
