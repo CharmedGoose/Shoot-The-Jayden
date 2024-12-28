@@ -152,14 +152,7 @@ public class JaydenAgent : Agent
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
-        if (Vector3.Distance(transform.position, player.position) < 100)
-        {
-            AddReward(-1f);
-        }
-        else
-        {
-            AddReward(1f);
-        }
+        AddReward(Vector3.Distance(transform.position, player.position) * 0.01f);
 
         if (actions.DiscreteActions[2] == 1 && isGrounded)
         {
@@ -203,7 +196,7 @@ public class JaydenAgent : Agent
             }
         }
 
-        AddReward(-2.5f);
+        AddReward(-1.5f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
