@@ -8,8 +8,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Settings")]
     public float speed = 12f;
+    public float sprintSpeed = 20f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
+    public bool canSprint = false;
 
     [Header("Ground Check")]
     public float groundDistance = 0.4f;
@@ -30,11 +32,13 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
 
     InputAction moveControls;
+    InputAction sprint;
     InputAction jump;
 
     void Awake()
     {
         moveControls = InputSystem.actions.FindAction("Move");
+        sprint = InputSystem.actions.FindAction("Sprint");
         jump = InputSystem.actions.FindAction("Jump");
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("GroundCheck");
@@ -64,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
 
-        controller.Move(speed * Time.deltaTime * move.normalized);
+        controller.Move((sprint.IsPressed() ? sprintSpeed : speed) * Time.deltaTime * move.normalized);
 
         if (jump.IsPressed() && isGrounded)
         {

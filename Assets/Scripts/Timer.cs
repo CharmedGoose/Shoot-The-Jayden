@@ -9,10 +9,15 @@ public class Timer : MonoBehaviour
 
     [Header("References")]
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI objectiveText;
 
     void Update()
     {
         timeAmount -= Time.deltaTime;
         timerText.text = TimeSpan.FromSeconds(timeAmount).ToString(@"mm\:ss");
+        if (timeAmount <= 0)
+        {
+            objectiveText.text = "<b>Objective:</b>\nRUN";
+        }
     }
 }

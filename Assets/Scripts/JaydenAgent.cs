@@ -181,6 +181,7 @@ public class JaydenAgent : Agent
             AddReward(10f);
             enabled = false;
             GetComponent<TargetPlayer>().enabled = true;
+            GetComponent<Target>().isInvincible = true;
             //targetJayden.End();
             //timer.timeAmount = 300;
             return;
