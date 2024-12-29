@@ -16,7 +16,6 @@ public class JaydenAgent : Agent
     public LayerMask groundMask;
 
     [Header("References")]
-    public GameObject playerCheck;
     public Transform player;
     public Transform playerShootPoint;
     public Timer timer;
@@ -176,7 +175,6 @@ public class JaydenAgent : Agent
             enabled = false;
             GetComponent<TargetPlayer>().enabled = true;
             GetComponent<Target>().isInvincible = true;
-            playerCheck.SetActive(true);
             //targetJayden.End();
             //timer.timeAmount = 300;
             return;
