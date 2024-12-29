@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public float spawnX = 325;
     public float spawnZ = 325;
 
+    int ending = 0;
+
     int JaydenCount;
     bool targetPlayer = false;
 
@@ -23,6 +25,16 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public int GetEnding()
+    {
+        return ending;
+    }
+
+    public void SetEnding(int value)
+    {
+        ending = value;
     }
 
     public int GetJaydenCount()
