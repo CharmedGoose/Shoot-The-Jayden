@@ -3,7 +3,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using UnityEngine.Animations.Rigging;
 using TMPro;
 using System.Collections.Generic;
 

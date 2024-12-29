@@ -31,14 +31,14 @@ public class EndlessTerrain : MonoBehaviour
     int currentChunkCoordY;
     Vector2 viewedChunkCoord;
 
-    Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new();
-    static List<TerrainChunk> terrainChunksVisibleLastUpdate = new();
+    readonly Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new();
+    static readonly List<TerrainChunk> terrainChunksVisibleLastUpdate = new();
 
     void Start()
     {
         mapGenerator = FindFirstObjectByType<MapGenerator>();
 
-        maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
+        maxViewDst = detailLevels[^1].visibleDstThreshold;
         chunkSize = MapGenerator.MapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
 
@@ -88,17 +88,17 @@ public class EndlessTerrain : MonoBehaviour
     public class TerrainChunk
     {
 
-        GameObject meshObject;
+        readonly GameObject meshObject;
         Vector2 position;
         Bounds bounds;
 
-        MeshRenderer meshRenderer;
-        MeshFilter meshFilter;
-        MeshCollider meshCollider;
+        readonly MeshRenderer meshRenderer;
+        readonly MeshFilter meshFilter;
+        readonly MeshCollider meshCollider;
 
-        LODInfo[] detailLevels;
-        LODMesh[] lodMeshes;
-        LODMesh collisionLODMesh;
+        readonly LODInfo[] detailLevels;
+        readonly LODMesh[] lodMeshes;
+        readonly LODMesh collisionLODMesh;
 
         MapData mapData;
         bool mapDataReceived;
@@ -225,8 +225,8 @@ public class EndlessTerrain : MonoBehaviour
         public Mesh mesh;
         public bool hasRequestedMesh;
         public bool hasMesh;
-        int lod;
-        System.Action updateCallback;
+        readonly int lod;
+        readonly System.Action updateCallback;
 
         public LODMesh(int lod, System.Action updateCallback)
         {

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ResetOnFloorTouch : MonoBehaviour
 {
-
     GameObject jaydenMovement;
     void OnTriggerEnter(Collider collider)
     {

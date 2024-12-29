@@ -146,7 +146,7 @@ public class MapGenerator : MonoBehaviour
         falloffMap = FalloffGenerator.GenerateFalloffMap(MapChunkSize);
     }
 
-    struct MapThreadInfo<T>
+    readonly struct MapThreadInfo<T>
     {
         public readonly Action<T> callback;
         public readonly T parameter;
@@ -167,7 +167,7 @@ public struct TerrainType
     public Color color;
 }
 
-public struct MapData
+public readonly struct MapData
 {
     public readonly float[,] heightMap;
     public readonly Color32[] colourMap;

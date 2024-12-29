@@ -12,9 +12,9 @@ public class ShellCollide : MonoBehaviour
         hasCollided = false;
     }
 
-    void OnCollisionEnter()
+    void OnCollisionEnter(Collision collision)
     {
-        if (hasCollided) return;
+        if ((collision.gameObject.layer != LayerMask.NameToLayer("Ground")) || hasCollided) return;
         hasCollided = true;
         AudioSource.PlayClipAtPoint(shellHitSound, transform.position);
     }

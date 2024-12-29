@@ -15,20 +15,14 @@ public class JaydenAgent : Agent
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    [Header("Walls")]
-    public Transform northWall;
-    public Transform eastWall;
-    public Transform southWall;
-    public Transform westWall;
-
     [Header("References")]
+    public GameObject playerCheck;
     public Transform player;
     public Transform playerShootPoint;
     public Timer timer;
-    public RayPerceptionSensorComponent3D rayPerception;
     public Gun gun;
 
-    Vector3 move;
+    Vector3 move; 
     float moveZ;
 
     float rotationY;
@@ -182,6 +176,7 @@ public class JaydenAgent : Agent
             enabled = false;
             GetComponent<TargetPlayer>().enabled = true;
             GetComponent<Target>().isInvincible = true;
+            playerCheck.SetActive(true);
             //targetJayden.End();
             //timer.timeAmount = 300;
             return;

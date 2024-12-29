@@ -12,7 +12,6 @@ public class ShowBorder : MonoBehaviour
     public float fadeDistance = 91f;
     public float fadeStrength = 0.1f;
 
-
     Transform player;
     Renderer northWallRenderer;
     Renderer eastWallRenderer;

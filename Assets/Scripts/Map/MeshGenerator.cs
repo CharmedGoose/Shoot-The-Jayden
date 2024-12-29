@@ -79,17 +79,17 @@ public static class MeshGenerator
 public class MeshData
 {
     Vector3[] vertices;
-    int[] triangles;
+    readonly int[] triangles;
     Vector2[] uvs;
     Vector3[] bakedNormals;
 
-    Vector3[] borderVertices;
-    int[] borderTriangles;
+    readonly Vector3[] borderVertices;
+    readonly int[] borderTriangles;
 
     int triangleIndex;
     int borderTriangleIndex;
 
-    bool useFlatShading;
+    readonly bool useFlatShading;
 
     Vector3[] vertexNormals;
     int triangleCount;
