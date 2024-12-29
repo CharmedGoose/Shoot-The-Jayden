@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCollide : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class PlayerCollide : MonoBehaviour
     {
         if (collision.gameObject == player)
         {
-            
+            GameManager.instance.SetEnding(0);
+            SceneManager.LoadScene("End");
         }
     }
 }

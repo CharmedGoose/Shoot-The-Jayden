@@ -6,6 +6,7 @@ public class TypingEffect : MonoBehaviour
 {
     [Header("Settings")]
     public string fullText;
+    public float startDelay;
     public float delay = 0.1f;
 
     TextMeshProUGUI text;
@@ -14,6 +15,12 @@ public class TypingEffect : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
         text.text = string.Empty;
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(startDelay);
         StartCoroutine(TypeText());
     }
 
