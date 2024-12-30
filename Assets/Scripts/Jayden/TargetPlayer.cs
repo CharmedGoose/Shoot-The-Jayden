@@ -23,12 +23,26 @@ public class TargetPlayer : MonoBehaviour
 
     Vector3 lastPosition;
 
+    PlayerMovement playerMovement;
+
     CharacterController controller;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        playerMovement = player.GetComponent<PlayerMovement>();
         groundCheck = transform.Find("GroundCheck");
+    }
+
+    void OnEnable()
+    {
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement.canSprint = true;
+    }
+
+    void OnDisable()
+    {
+        playerMovement.canSprint = false;
     }
 
     void Update()
