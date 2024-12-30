@@ -21,7 +21,7 @@ public class ShowBorder : MonoBehaviour
     float opacity;
     float distance;
 
-    void Start()
+    void Awake()
     {
         player = Camera.main.transform;
         northWallRenderer = northWall.GetComponent<Renderer>();

@@ -15,7 +15,7 @@ public class WeaponSwitcher : MonoBehaviour
     GameObject bulletCasing;
     GameObject impact;
 
-    void Start()
+    void Awake()
     {
         SelectWeapon();
         foreach (Transform weapon in transform)

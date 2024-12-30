@@ -34,9 +34,12 @@ public class EndlessTerrain : MonoBehaviour
     readonly Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new();
     static readonly List<TerrainChunk> terrainChunksVisibleLastUpdate = new();
 
-    void Start()
+    void Awake()
     {
         mapGenerator = FindFirstObjectByType<MapGenerator>();
+
+        terrainChunkDictionary.Clear();
+        terrainChunksVisibleLastUpdate.Clear();
 
         maxViewDst = detailLevels[^1].visibleDstThreshold;
         chunkSize = MapGenerator.MapChunkSize - 1;

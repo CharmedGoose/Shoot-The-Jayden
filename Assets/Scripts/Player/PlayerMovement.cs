@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
 
-        controller.Move((sprint.IsPressed() ? sprintSpeed : speed) * Time.deltaTime * move.normalized);
+        controller.Move(((sprint.IsPressed() && canSprint) ? sprintSpeed : speed) * Time.deltaTime * move.normalized);
 
         if (jump.IsPressed() && isGrounded)
         {

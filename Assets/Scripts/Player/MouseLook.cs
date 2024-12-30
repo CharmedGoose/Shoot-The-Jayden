@@ -32,7 +32,7 @@ public class MouseLook : MonoBehaviour
 
     InputAction mouse;
 
-    void Start()
+    void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
