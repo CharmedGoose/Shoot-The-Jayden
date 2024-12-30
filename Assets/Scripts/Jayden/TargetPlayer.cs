@@ -58,7 +58,7 @@ public class TargetPlayer : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, player.position) < 0.5f)
+        if (Vector3.Distance(transform.position, player.position) < 1f)
         {
             GameManager.instance.SetEnding(0);
             UnityEngine.SceneManagement.SceneManager.LoadScene("End");

@@ -14,7 +14,14 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timeAmount -= Time.deltaTime;
-        timerText.text = TimeSpan.FromSeconds(timeAmount).ToString(@"mm\:ss");
+        if (timeAmount <= 0)
+        {
+            timerText.text = "???";
+        }
+        else
+        {
+            timerText.text = TimeSpan.FromSeconds(timeAmount).ToString(@"mm\:ss");
+        }
         if (timeAmount <= 0)
         {
             objectiveText.text = "<b>Objective:</b>\nRUN";
