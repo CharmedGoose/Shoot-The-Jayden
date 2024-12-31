@@ -29,9 +29,9 @@ public class Target : MonoBehaviour
         if (isTraining) return;
         Destroy(gameObject);
         GameManager.instance.RemoveJayden(text);
-        if (GameManager.instance.GetJaydenCount() == 0 && timer.timeAmount > 0)
+        if (GameManager.instance.GetJaydenCount() == 0)
         {
-            GameManager.instance.SetEnding(1);
+            GameManager.instance.SetEnding((timer.timeAmount > 0) ? 1 : 2);
             SceneManager.LoadScene("End");
         }
     }
