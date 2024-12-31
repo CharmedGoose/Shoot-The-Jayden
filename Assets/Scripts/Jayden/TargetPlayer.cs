@@ -14,6 +14,7 @@ public class TargetPlayer : MonoBehaviour
 
     [Header("References")]
     public Transform player;
+    public Timer timer;
 
     Vector3 velocity;
     Transform groundCheck;
@@ -76,6 +77,12 @@ public class TargetPlayer : MonoBehaviour
         {
             GameManager.instance.SetEnding(0);
             UnityEngine.SceneManagement.SceneManager.LoadScene("End");
+        }
+
+        if (timer.timeAmount <= -60)
+        {
+            GetComponent<Target>().isInvincible = false;
+            speed = 10f;
         }
     }
 }

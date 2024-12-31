@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Target : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Target : MonoBehaviour
 
     [Header("References")]
     public TMPro.TextMeshProUGUI text;
+    public Timer timer;
 
     public void TakeDamage(float amount)
     {
@@ -27,5 +29,10 @@ public class Target : MonoBehaviour
         if (isTraining) return;
         Destroy(gameObject);
         GameManager.instance.RemoveJayden(text);
+        if (GameManager.instance.GetJaydenCount() == 0 && timer.timeAmount > 0)
+        {
+            GameManager.instance.SetEnding(1);
+            SceneManager.LoadScene("End");
+        }
     }
 }
