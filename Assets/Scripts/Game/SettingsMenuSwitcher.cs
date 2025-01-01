@@ -33,5 +33,7 @@ public class SettingsMenuSwitcher : MonoBehaviour
     {
         gameUI.SetActive(!gameUI.activeSelf);
         settingsUI.SetActive(!settingsUI.activeSelf);
+        Cursor.lockState = settingsUI.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = settingsUI.activeSelf;
     }
 }

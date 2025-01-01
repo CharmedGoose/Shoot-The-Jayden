@@ -132,7 +132,8 @@ public class Scope : MonoBehaviour
         weaponCamera.SetActive(false);
 
         mainCamera.fieldOfView = scopeFOV;
-        mouseLook.currentSensitivity = mouseLook.mouseADSSensitivity;
+        mouseLook.currentSensitivityX = mouseLook.mouseADSSensitivityX;
+        mouseLook.currentSensitivityY = mouseLook.mouseADSSensitivityY;
     }
 
     void OnUnscope()
@@ -141,6 +142,7 @@ public class Scope : MonoBehaviour
         weaponCamera.SetActive(true);
 
         mainCamera.fieldOfView = defaultFOV;
-        mouseLook.currentSensitivity = mouseLook.mouseSensitivity;
+        mouseLook.currentSensitivityX = mouseLook.mouseSensitivityX;
+        mouseLook.currentSensitivityY = mouseLook.mouseSensitivityY;
     }
 }
