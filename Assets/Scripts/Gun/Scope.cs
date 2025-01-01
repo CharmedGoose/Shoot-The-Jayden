@@ -39,6 +39,8 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed += ctx =>
         {
+            if (GameManager.instance.IsPaused()) return;
+
             if (animator.GetBool("isReloading") || resume) return;
             if (weaponSwitcher.selectedWeapon == 1)
             {
@@ -52,6 +54,8 @@ public class Scope : MonoBehaviour
 
         scopeButton.canceled += ctx =>
         {
+            if (GameManager.instance.IsPaused()) return;
+
             if (weaponSwitcher.selectedWeapon == 1)
             {
                 animator.SetBool("isVectorScoped", false);
@@ -66,6 +70,8 @@ public class Scope : MonoBehaviour
     {
         scopeButton.performed -= ctx =>
         {
+            if (GameManager.instance.IsPaused()) return;
+
             if (animator.GetBool("isReloading") || resume) return;
             if (weaponSwitcher.selectedWeapon == 1)
             {
@@ -79,6 +85,8 @@ public class Scope : MonoBehaviour
 
         scopeButton.canceled -= ctx =>
         {
+            if (GameManager.instance.IsPaused()) return;
+            
             if (weaponSwitcher.selectedWeapon == 1)
             {
                 animator.SetBool("isVectorScoped", false);
@@ -91,6 +99,8 @@ public class Scope : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.IsPaused()) return;
+
         if (!scopeButton.IsPressed() || animator.GetBool("isReloading") || animator.GetBool("eject") && weaponSwitcher.selectedWeapon != 1)
         {
             if ((animator.GetBool("eject") || animator.GetBool("isReloading")) && animator.GetBool("isScoped"))
@@ -127,6 +137,8 @@ public class Scope : MonoBehaviour
 
     IEnumerator OnScope()
     {
+        if (GameManager.instance.IsPaused()) yield break;
+
         yield return new WaitForSeconds(0.15f);
         scope.SetActive(true);
         weaponCamera.SetActive(false);
@@ -138,6 +150,8 @@ public class Scope : MonoBehaviour
 
     void OnUnscope()
     {
+        if (GameManager.instance.IsPaused()) return;
+
         scope.SetActive(false);
         weaponCamera.SetActive(true);
 

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public float spawnX = 325;
     public float spawnZ = 325;
 
+    bool isPaused = false;
+
     int ending = 0;
 
     int JaydenCount;
@@ -65,5 +67,17 @@ public class GameManager : MonoBehaviour
     public void SetTargetPlayer(bool value)
     {
         targetPlayer = value;
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
+    public void SetPaused(bool value)
+    {
+        isPaused = value;
+
+        Time.timeScale = isPaused ? 0 : 1;
     }
 }

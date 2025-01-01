@@ -48,7 +48,9 @@ public class MouseLook : MonoBehaviour
     }
 
     void Update()
-    {   
+    {
+        if (GameManager.instance.IsPaused()) return;
+
         if (mouse == null) return;
 
         mousePosition = mouse.ReadValue<Vector2>();

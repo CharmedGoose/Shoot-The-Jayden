@@ -94,6 +94,8 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.IsPaused()) return;
+
         mouseLook.shot = false;
         if (animator.GetBool("eject")) Ejecting();
 
