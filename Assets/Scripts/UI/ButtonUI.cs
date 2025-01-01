@@ -49,7 +49,7 @@ public class ButtonUI : MonoBehaviour
     }
     public void UpdateSensitivityX(string sensitivity)
     {
-        PlayerPrefs.SetFloat("MouseSensitivityX", float.Parse(sensitivity, System.Globalization.NumberStyles.Float));
+        PlayerPrefs.SetFloat("MouseSensitivityX", float.Parse(sensitivity, System.Globalization.NumberStyles.Integer));
         mouseLook.UpdateSensitivity();
         mouseSliderX.value = PlayerPrefs.GetFloat("MouseSensitivityX");
     }
@@ -62,7 +62,7 @@ public class ButtonUI : MonoBehaviour
     }
     public void UpdateSensitivityY(string sensitivity)
     {
-        PlayerPrefs.SetFloat("MouseSensitivityY", float.Parse(sensitivity, System.Globalization.NumberStyles.Float));
+        PlayerPrefs.SetFloat("MouseSensitivityY", float.Parse(sensitivity, System.Globalization.NumberStyles.Integer));
         mouseLook.UpdateSensitivity();
         mouseSliderY.value = PlayerPrefs.GetFloat("MouseSensitivityY");
     }
