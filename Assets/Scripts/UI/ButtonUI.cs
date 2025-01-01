@@ -18,19 +18,16 @@ public class ButtonUI : MonoBehaviour
     public TMP_InputField ADSInputY;
     public MouseLook mouseLook;
 
-    void OnEnable()
+    public void UpdateValues()
     {
-        if (mouseSliderX)
-        {
-            mouseSliderX.value = PlayerPrefs.GetFloat("MouseSensitivityX");
-            mouseSliderY.value = PlayerPrefs.GetFloat("MouseSensitivityY");
-            mouseInputX.text = PlayerPrefs.GetFloat("MouseSensitivityX").ToString();
-            mouseInputY.text = PlayerPrefs.GetFloat("MouseSensitivityY").ToString();
-            ADSSliderX.value = PlayerPrefs.GetFloat("ADSSensitivityX");
-            ADSSliderY.value = PlayerPrefs.GetFloat("ADSSensitivityY");
-            ADSInputX.text = PlayerPrefs.GetFloat("ADSSensitivityX").ToString();
-            ADSInputY.text = PlayerPrefs.GetFloat("ADSSensitivityY").ToString();
-        }
+        mouseSliderX.value = PlayerPrefs.GetFloat("MouseSensitivityX");
+        mouseSliderY.value = PlayerPrefs.GetFloat("MouseSensitivityY");
+        mouseInputX.text = PlayerPrefs.GetFloat("MouseSensitivityX").ToString();
+        mouseInputY.text = PlayerPrefs.GetFloat("MouseSensitivityY").ToString();
+        ADSSliderX.value = PlayerPrefs.GetFloat("ADSSensitivityX");
+        ADSSliderY.value = PlayerPrefs.GetFloat("ADSSensitivityY");
+        ADSInputX.text = PlayerPrefs.GetFloat("ADSSensitivityX").ToString();
+        ADSInputY.text = PlayerPrefs.GetFloat("ADSSensitivityY").ToString();
     }
 
     public void TryAgain()
