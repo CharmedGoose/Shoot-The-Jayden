@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class MouseLook : MonoBehaviour
 {
     [Header("Settings")]
-    public float mouseSensitivityX = 0.2f;
-    public float mouseSensitivityY = 0.2f;
-    public float mouseADSSensitivityX = 0.02f;
-    public float mouseADSSensitivityY = 0.02f;
+    public float mouseSensitivityX = 50f;
+    public float mouseSensitivityY = 50f;
+    public float mouseADSSensitivityX = 5f;
+    public float mouseADSSensitivityY = 5f;
 
     public float headRotationY;
     [HideInInspector] public float currentSensitivityX;
@@ -45,7 +45,6 @@ public class MouseLook : MonoBehaviour
         mouse = InputSystem.actions.FindAction("Look");
 
         UpdateEmptySettings();
-        UpdateSensitivity();
     }
 
     void Update()
@@ -111,8 +110,8 @@ public class MouseLook : MonoBehaviour
 
     public void UpdateADSSensitivity()
     {
-        mouseADSSensitivityX = PlayerPrefs.GetFloat("MouseADSSensitivityX");
-        mouseADSSensitivityY = PlayerPrefs.GetFloat("MouseADSSensitivityY");
+        mouseADSSensitivityX = PlayerPrefs.GetFloat("ADSSensitivityX");
+        mouseADSSensitivityY = PlayerPrefs.GetFloat("ADSSensitivityY");
     }
 
     void UpdateEmptySettings()
@@ -125,13 +124,19 @@ public class MouseLook : MonoBehaviour
         {
             PlayerPrefs.SetFloat("MouseSensitivityY", mouseSensitivityY);
         }
-        if (!PlayerPrefs.HasKey("MouseADSSensitivityX"))
+        if (!PlayerPrefs.HasKey("ADSSensitivityX"))
         {
-            PlayerPrefs.SetFloat("MouseADSSensitivityX", mouseADSSensitivityX);
+            PlayerPrefs.SetFloat("ADSSensitivityX", mouseADSSensitivityX);
         }
-        if (!PlayerPrefs.HasKey("MouseADSSensitivityY"))
+        if (!PlayerPrefs.HasKey("ADSSensitivityY"))
         {
-            PlayerPrefs.SetFloat("MouseADSSensitivityY", mouseADSSensitivityY);
+            PlayerPrefs.SetFloat("ADSSensitivityY", mouseADSSensitivityY);
         }
+
+        UpdateSensitivity();
+
+        UpdateADSSensitivity();
+
+        PlayerPrefs.Save();
     }
 }
