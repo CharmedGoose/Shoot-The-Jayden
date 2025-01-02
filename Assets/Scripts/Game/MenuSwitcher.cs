@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SettingsMenuSwitcher : MonoBehaviour
+public class MenuSwitcher : MonoBehaviour
 {
     GameObject gameUI;
     GameObject menuUI;
@@ -37,7 +37,7 @@ public class SettingsMenuSwitcher : MonoBehaviour
         menu.performed -= ctx => ToggleUI();
     }
 
-    void ToggleUI()
+    public void ToggleUI()
     {
         if (settingsUI.activeSelf)
         {
