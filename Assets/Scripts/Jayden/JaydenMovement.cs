@@ -12,6 +12,14 @@ public class JaydenMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    [Header("References")]
+    public Animator animator;
+
+    float z;
+    float y;
+
+    Vector3 move;
+
     Vector3 velocity;
     Transform groundCheck;
     bool isGrounded;
@@ -26,6 +34,8 @@ public class JaydenMovement : MonoBehaviour
 
     void Update()
     {
+        animator.SetBool("isWalking", true);
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -33,14 +43,38 @@ public class JaydenMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = Random.Range(-1, 2);
-        float z = Random.Range(-1, 2);
+        z = 1f;
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        if (Random.Range(0, 200) == 0)
+        {
+            // not ai
+            switch (Random.Range(0, 5))
+            {
+                case 0:
+                    y = transform.eulerAngles.y + 22.5f;
+                    break;
+                case 1:
+                    y = transform.eulerAngles.y + 45f;
+                    break;
+                case 2:
+                    y = transform.eulerAngles.y + -22.5f;
+                    break;
+                case 3:
+                    y = transform.eulerAngles.y + -45f;
+                    break;
+                case 4:
+                    y = transform.eulerAngles.y + 0f;
+                    break;
+            }
+        }
+
+        move = transform.forward * z;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, y, 0), Time.deltaTime / 1f);
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
-        if (Random.Range(0, 11000) == 0 && isGrounded)
+        if (Random.Range(0, 1000) == 0 && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
