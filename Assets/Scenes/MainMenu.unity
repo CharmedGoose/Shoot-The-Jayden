@@ -754,6 +754,8 @@ GameObject:
   - component: {fileID: 615749695}
   - component: {fileID: 615749694}
   - component: {fileID: 615749693}
+  - component: {fileID: 615749696}
+  - component: {fileID: 615749697}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -863,6 +865,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615749691}
   m_CullTransparentMesh: 1
+--- !u!114 &615749696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615749691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8061c7bb320fb498d8ad161f4ce6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.02
+  delay: 4
+--- !u!114 &615749697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615749691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f9ed58ee995c743adcdf19798c6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 4
 --- !u!1 &621436297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1358,8 @@ GameObject:
   - component: {fileID: 1004519771}
   - component: {fileID: 1004519770}
   - component: {fileID: 1004519769}
+  - component: {fileID: 1004519772}
+  - component: {fileID: 1004519773}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -1438,6 +1469,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004519767}
   m_CullTransparentMesh: 1
+--- !u!114 &1004519772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004519767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8061c7bb320fb498d8ad161f4ce6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.02
+  delay: 3.5
+--- !u!114 &1004519773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004519767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f9ed58ee995c743adcdf19798c6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 3.5
 --- !u!1 &1060306412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,6 +1733,8 @@ GameObject:
   - component: {fileID: 1237440303}
   - component: {fileID: 1237440302}
   - component: {fileID: 1237440301}
+  - component: {fileID: 1237440304}
+  - component: {fileID: 1237440305}
   m_Layer: 5
   m_Name: Quit?
   m_TagString: Untagged
@@ -1784,6 +1844,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237440299}
   m_CullTransparentMesh: 1
+--- !u!114 &1237440304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237440299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8061c7bb320fb498d8ad161f4ce6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.02
+  delay: 4.5
+--- !u!114 &1237440305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237440299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f9ed58ee995c743adcdf19798c6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 4.5
 --- !u!1 &1272044144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2488,8 @@ GameObject:
   - component: {fileID: 1547218056}
   - component: {fileID: 1547218055}
   - component: {fileID: 1547218054}
+  - component: {fileID: 1547218057}
+  - component: {fileID: 1547218058}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -2510,6 +2599,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547218052}
   m_CullTransparentMesh: 1
+--- !u!114 &1547218057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547218052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8061c7bb320fb498d8ad161f4ce6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.02
+  delay: 3
+--- !u!114 &1547218058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547218052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f9ed58ee995c743adcdf19798c6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 3
 --- !u!1 &1561560854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,6 +2733,7 @@ GameObject:
   - component: {fileID: 1696802253}
   - component: {fileID: 1696802255}
   - component: {fileID: 1696802254}
+  - component: {fileID: 1696802256}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2742,6 +2859,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696802252}
   m_CullTransparentMesh: 1
+--- !u!114 &1696802256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696802252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba55b24ab3587c04f862f15dc156903f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullText: it look's goofy ik
+  startDelay: 2.6
+  delay: 0.025
 --- !u!1 &1712840554
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,7 +3397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8061c7bb320fb498d8ad161f4ce6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.001
+  speed: 0.01
   delay: 0
 --- !u!1 &1876782206
 GameObject:
@@ -3784,7 +3916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullText: Shoot The Jayden
-  startDelay: 0
+  startDelay: 1
   delay: 0.1
 --- !u!1 &2129578656
 GameObject:
