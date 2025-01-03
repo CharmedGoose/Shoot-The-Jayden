@@ -15,6 +15,7 @@ public class TargetPlayer : MonoBehaviour
     [Header("References")]
     public Animator animator;
     public Transform player;
+    public GameObject eyes;
     public Timer timer;
 
     Vector3 velocity;
@@ -34,6 +35,8 @@ public class TargetPlayer : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerMovement = player.GetComponent<PlayerMovement>();
         groundCheck = transform.Find("GroundCheck");
+
+        eyes.SetActive(false);
     }
 
     void OnEnable()
@@ -48,10 +51,14 @@ public class TargetPlayer : MonoBehaviour
     {
         animator.SetBool("isWalking", false);
         playerMovement.canSprint = false;
+
+        eyes.SetActive(false);
     }
 
     void Update()
     {
+        eyes.SetActive(true);
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         direction = (player.position - transform.position).normalized;
