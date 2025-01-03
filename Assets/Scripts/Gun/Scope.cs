@@ -33,10 +33,7 @@ public class Scope : MonoBehaviour
         weaponSwitcher = GetComponent<WeaponSwitcher>();
         weaponCamera = transform.parent.Find("WeaponCamera").gameObject;
         scopeButton = InputSystem.actions.FindAction("Aim");
-    }
 
-    void OnEnable()
-    {
         scopeButton.performed += ctx =>
         {
             if (GameManager.instance.IsPaused()) return;
@@ -52,49 +49,17 @@ public class Scope : MonoBehaviour
             StartCoroutine(OnScope());
         };
 
-        scopeButton.canceled += ctx =>
-        {
-            if (GameManager.instance.IsPaused()) return;
+        scopeButton.canceled += ctx => OnUnscope();
+    }
 
-            if (weaponSwitcher.selectedWeapon == 1)
-            {
-                animator.SetBool("isVectorScoped", false);
-                return;
-            }
-            animator.SetBool("isScoped", false);
-            OnUnscope();
-        };
+    void OnEnable()
+    {
+        scopeButton.Enable();
     }
 
     void OnDisable()
     {
-        scopeButton.performed -= ctx =>
-        {
-            if (GameManager.instance.IsPaused()) return;
-
-            if (animator.GetBool("isReloading") || resume) return;
-            if (weaponSwitcher.selectedWeapon == 1)
-            {
-                animator.SetBool("isVectorScoped", true);
-                return;
-            }
-            if (animator.GetBool("eject")) return;
-            animator.SetBool("isScoped", true);
-            StartCoroutine(OnScope());
-        };
-
-        scopeButton.canceled -= ctx =>
-        {
-            if (GameManager.instance.IsPaused()) return;
-            
-            if (weaponSwitcher.selectedWeapon == 1)
-            {
-                animator.SetBool("isVectorScoped", false);
-                return;
-            }
-            animator.SetBool("isScoped", false);
-            OnUnscope();
-        };
+        scopeButton.Disable();
     }
 
     void Update()
@@ -137,8 +102,6 @@ public class Scope : MonoBehaviour
 
     IEnumerator OnScope()
     {
-        if (GameManager.instance.IsPaused()) yield break;
-
         yield return new WaitForSeconds(0.15f);
         scope.SetActive(true);
         weaponCamera.SetActive(false);
@@ -151,6 +114,13 @@ public class Scope : MonoBehaviour
     void OnUnscope()
     {
         if (GameManager.instance.IsPaused()) return;
+
+        if (weaponSwitcher.selectedWeapon == 1)
+        {
+            animator.SetBool("isVectorScoped", false);
+            return;
+        }
+        animator.SetBool("isScoped", false);
 
         scope.SetActive(false);
         weaponCamera.SetActive(true);

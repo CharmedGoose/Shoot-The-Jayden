@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ButtonUI : MonoBehaviour
 {
     [Header("References")]
+    public Animator animator;
     public GameObject menu;
     public GameObject settings;
     public Slider mouseSliderX;
@@ -30,21 +31,26 @@ public class ButtonUI : MonoBehaviour
         ADSInputY.text = PlayerPrefs.GetFloat("ADSSensitivityY").ToString();
     }
 
-    public void TryAgain()
+    public void Play()
     {
         SceneManager.LoadScene("Game");
     }
 
     public void Settings()
     {
-        menu.SetActive(false);
-        settings.SetActive(true);
+        animator.SetBool("settingsOpen", true);
     }
 
-    public void Back()
+    public void MainMenu()
     {
-        menu.SetActive(true);
-        settings.SetActive(false);
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
+        GameManager.instance.SetPaused(false);
+    }
+
+    public void ExitSettings()
+    {
+        animator.SetBool("settingsOpen", false);
     }
 
     public void UpdateSensitivityX(float sensitivity)

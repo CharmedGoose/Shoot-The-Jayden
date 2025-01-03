@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UnlockMouse : MonoBehaviour
 {
-    void Awake()
+    void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

@@ -519,7 +519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 49369061}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844482915}
+        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &49369061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,7 +656,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 844482915}
         m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: TryAgain
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1455,7 +1467,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 515751077}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844482915}
+        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &515751077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,6 +1832,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cd53c4aae7143448be26564c441fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  menu: {fileID: 0}
+  settings: {fileID: 0}
+  mouseSliderX: {fileID: 0}
+  mouseSliderY: {fileID: 0}
+  ADSSliderX: {fileID: 0}
+  ADSSliderY: {fileID: 0}
+  mouseInputX: {fileID: 0}
+  mouseInputY: {fileID: 0}
+  ADSInputX: {fileID: 0}
+  ADSInputY: {fileID: 0}
+  mouseLook: {fileID: 0}
 --- !u!1 &844595343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +1940,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 844595347}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844482915}
+        m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &844595347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3221,7 +3269,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 844482915}
         m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: TryAgain
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3337,7 +3385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965727123}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5855ea0a50d9d5e4290456e5570ac0bd, type: 3}
   m_Name: 
@@ -3441,7 +3489,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 844482915}
         m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
-        m_MethodName: TryAgain
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

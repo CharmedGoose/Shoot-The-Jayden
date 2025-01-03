@@ -1,57 +1,75 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MenuSwitcher : MonoBehaviour
 {
+    Animator animator;
+
     GameObject gameUI;
     GameObject menuUI;
-    GameObject pauseUI;
-    GameObject settingsUI;
+
+    bool paused = false;
 
     InputAction menu;
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
+
+        animator.SetBool("paused", false);
+        animator.SetBool("settingsOpen", false);
+
         gameUI = transform.GetChild(0).gameObject;
         menuUI = transform.GetChild(1).gameObject;
 
-        pauseUI = menuUI.transform.GetChild(1).gameObject;
-        settingsUI = menuUI.transform.GetChild(2).gameObject;
-        
-        gameUI.SetActive(true);
-        menuUI.SetActive(false);
-
-        pauseUI.SetActive(true);
-        settingsUI.SetActive(false);
-
         menu = InputSystem.actions.FindAction("Menu");
+
+        menu.performed += ctx => ToggleUI();
     }
 
     void OnEnable()
     {
-        menu.performed += ctx => ToggleUI();
+        menu.Enable();
     }
     
     void OnDisable()
     {
-        menu.performed -= ctx => ToggleUI();
+        menu.Disable();
     }
 
-    public void ToggleUI()
+    void ToggleUI()
     {
-        if (settingsUI.activeSelf)
+        if (animator.GetBool("settingsOpen"))
         {
-            settingsUI.SetActive(false);
-            pauseUI.SetActive(true);
+            animator.SetBool("settingsOpen", false);
             return;
         }
 
-        menuUI.SetActive(!menuUI.activeSelf);
-        gameUI.SetActive(!gameUI.activeSelf);
+        paused = !paused;
 
-        GameManager.instance.SetPaused(menuUI.activeSelf);
+        animator.SetBool("paused", paused);
 
-        Cursor.lockState = menuUI.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = menuUI.activeSelf;
+        if (paused)
+        {
+            gameUI.SetActive(false);
+            menuUI.SetActive(true);
+        }
+        else
+        {
+            StartCoroutine(ShowGameUI());
+        }
+
+        GameManager.instance.SetPaused(paused);
+
+        Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = paused;
+    }
+
+    IEnumerator ShowGameUI()
+    {
+        yield return new WaitForSeconds(0.25f);
+        gameUI.SetActive(true);
+        menuUI.SetActive(false);
     }
 }
