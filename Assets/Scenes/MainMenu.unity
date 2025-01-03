@@ -2863,6 +2863,7 @@ GameObject:
   - component: {fileID: 1696802255}
   - component: {fileID: 1696802254}
   - component: {fileID: 1696802256}
+  - component: {fileID: 1696802257}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2887,7 +2888,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 74.8, y: -44.2}
-  m_SizeDelta: {x: 50, y: 10}
+  m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696802254
 MonoBehaviour:
@@ -3000,9 +3001,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba55b24ab3587c04f862f15dc156903f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullText: it look's goofy ik
+  fullText: 
   startDelay: 2.6
   delay: 0.025
+--- !u!114 &1696802257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696802252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7916ba5ad73c1e4fbab76622836e707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1712840554
 GameObject:
   m_ObjectHideFlags: 0
