@@ -30,7 +30,7 @@ public class SlideIn : MonoBehaviour
     {
         if (!start) return;
 
-        time += Time.deltaTime / speed;
+        time += Time.deltaTime * speed;
         rectTransform.anchoredPosition = Vector3.Lerp(rectTransform.anchoredPosition, position, time);
     }
 
