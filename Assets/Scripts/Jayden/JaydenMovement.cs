@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -7,6 +8,7 @@ public class JaydenMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
+    public float moveDelay = 1f;
 
     [Header("Ground Check")]
     public float groundDistance = 0.4f;
@@ -14,6 +16,8 @@ public class JaydenMovement : MonoBehaviour
 
     [Header("References")]
     public Animator animator;
+
+    bool canMove;
 
     float z;
     float y;
@@ -28,13 +32,16 @@ public class JaydenMovement : MonoBehaviour
 
     void Start()
     {
+        canMove = false;
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("GroundCheck");
+        animator.SetBool("isWalking", false);
+        StartCoroutine(WaitSeconds());
     }
 
     void Update()
     {
-        animator.SetBool("isWalking", true);
+        if (!canMove) return;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -82,5 +89,13 @@ public class JaydenMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    IEnumerator WaitSeconds()
+    {
+        yield return new WaitForSeconds(moveDelay);
+        animator.SetBool("isWalking", true);
+
+        canMove = true;
     }
 }
