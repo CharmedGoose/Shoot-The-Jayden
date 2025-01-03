@@ -70,7 +70,7 @@ public class JaydenMovement : MonoBehaviour
 
         move = transform.forward * z;
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, y, 0), Time.deltaTime / 1f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, y, 0), 1f - Mathf.Exp(-Time.deltaTime));
 
         controller.Move(speed * Time.deltaTime * move.normalized);
 
