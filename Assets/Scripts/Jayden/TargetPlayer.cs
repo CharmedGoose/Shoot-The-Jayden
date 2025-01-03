@@ -13,6 +13,7 @@ public class TargetPlayer : MonoBehaviour
     public LayerMask groundMask;
 
     [Header("References")]
+    public Animator animator;
     public Transform player;
     public Timer timer;
 
@@ -37,12 +38,15 @@ public class TargetPlayer : MonoBehaviour
 
     void OnEnable()
     {
+        animator.SetBool("isWalking", true);
+        animator.SetFloat("speed", 1f);
         playerMovement = player.GetComponent<PlayerMovement>();
         playerMovement.canSprint = true;
     }
 
     void OnDisable()
     {
+        animator.SetBool("isWalking", false);
         playerMovement.canSprint = false;
     }
 

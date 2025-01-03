@@ -16,6 +16,7 @@ public class JaydenAgent : Agent
     public LayerMask groundMask;
 
     [Header("References")]
+    public Animator animator;
     public Transform player;
     public Transform playerShootPoint;
     public Timer timer;
@@ -144,6 +145,9 @@ public class JaydenAgent : Agent
         transform.Rotate(Vector3.up * rotationY);
 
         controller.Move(speed * Time.deltaTime * move.normalized);
+
+        animator.SetBool("isWalking", move != Vector3.zero);
+        animator.SetFloat("speed", moveZ);
 
         AddReward(Vector3.Distance(transform.position, player.position) * 0.01f);
 

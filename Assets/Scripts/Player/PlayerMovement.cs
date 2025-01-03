@@ -59,14 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
         move = transform.right * x + transform.forward * z;
 
-        if(move != Vector3.zero)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.SetBool("isWalking", false);
-        }
+        animator.SetBool("isWalking", move != Vector3.zero);
 
         controller.Move(((sprint.IsPressed() && canSprint) ? sprintSpeed : speed) * Time.deltaTime * move.normalized);
 
