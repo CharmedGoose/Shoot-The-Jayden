@@ -28,7 +28,7 @@ public class IWonderWhatThisDoes : MonoBehaviour
     Transform playerChecker;
     GameObject eyes;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();

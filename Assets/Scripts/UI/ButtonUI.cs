@@ -48,6 +48,11 @@ public class ButtonUI : MonoBehaviour
         GameManager.instance.SetPaused(false);
     }
 
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void ExitSettings()
     {
         animator.SetBool("settingsOpen", false);
