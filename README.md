@@ -2,6 +2,8 @@
 
 A game about shooting someone named Jayden, or is there more?
 
+May or may not have lore.
+
 ## Running Locally
 
 Clone this repository:  

@@ -7,7 +7,7 @@ public class EndingSelector : MonoBehaviour
         int i = 0;
         foreach (Transform ending in transform)
         {
-            if (i == GameManager.instance.GetEnding())
+            if (GameManager.instance.GetEnding() == i)
             {
                 ending.gameObject.SetActive(true);
             }
