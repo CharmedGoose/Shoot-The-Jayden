@@ -49,11 +49,17 @@ Then wait a year
 [Weapon Switching by Brackeys](https://www.youtube.com/watch?v=Dn_BUIVdAPg)  
 [Procedural Terrain Generation by Sebastian Lague](https://www.youtube.com/playlist?list=PLFt_AvWsXl0eBW2EiBtl_sxmDtSgZBxB3)  
 
+### Special Thanks
+
+Jayden - For his picture and the idea of this game
+
 ### Made in Unity 6000.0.28f1  
 
 ## Notes
 
-This game is not targeted towards anyone Jayden  
+This game is not targeted towards anyone named Jayden  
 This project took way longer than I expected cause I had to redo some stuff.  
 Also please don't report me, I just code really slow.  
+This project took almost 100 hours.  
+Still has some bugs.  
 I used Github Copilot for auto completion.  
