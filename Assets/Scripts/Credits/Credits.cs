@@ -11,6 +11,6 @@ public class Credits : MonoBehaviour
     IEnumerator ReturnToMenu()
     {
         yield return new WaitForSeconds(45f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        StartCoroutine(LevelLoader.instance.LoadLevel(0));
     }
 }

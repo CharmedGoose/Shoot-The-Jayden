@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonUI : MonoBehaviour
@@ -33,7 +32,7 @@ public class ButtonUI : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        StartCoroutine(LevelLoader.instance.LoadLevel(1));
     }
 
     public void Settings()
@@ -43,14 +42,14 @@ public class ButtonUI : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(LevelLoader.instance.LoadLevel(0));
         Time.timeScale = 1;
         GameManager.instance.SetPaused(false);
     }
 
     public void Credits()
     {
-        SceneManager.LoadScene("Credits");
+        StartCoroutine(LevelLoader.instance.LoadLevel(3));
     }
 
     public void ExitSettings()

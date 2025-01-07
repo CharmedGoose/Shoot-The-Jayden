@@ -87,7 +87,7 @@ public class TargetPlayer : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) < 1f)
         {
             GameManager.instance.SetEnding(0);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("End");
+            StartCoroutine(LevelLoader.instance.LoadLevel(2));
         }
 
         if (timer.timeAmount <= -60)

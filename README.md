@@ -47,7 +47,8 @@ Then wait a year
 [Shooting with Raycasts by Brackeys](https://www.youtube.com/watch?v=THnivyG0Mvo)  
 [How to make a Sniper Scope Effect by Brackeys](https://www.youtube.com/watch?v=adcKX1c-kag)  
 [Weapon Switching by Brackeys](https://www.youtube.com/watch?v=Dn_BUIVdAPg)  
-[Procedural Terrain Generation by Sebastian Lague](https://www.youtube.com/playlist?list=PLFt_AvWsXl0eBW2EiBtl_sxmDtSgZBxB3)  
+[How to make AWESOME Scene Transitions in Unity! by Brackeys](https://www.youtube.com/watch?v=CE9VOZivb3I)  
+[Procedural Terrain Generation by Sebastian Lague](https://www.youtube.com/playlist?list=PLFt_AvWsXl0eBW2EiBtl_sxmDtSgZ)
 
 ### Special Thanks
 

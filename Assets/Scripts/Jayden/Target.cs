@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Target : MonoBehaviour
 {
@@ -32,7 +31,7 @@ public class Target : MonoBehaviour
         if (GameManager.instance.GetJaydenCount() == 10)
         {
             GameManager.instance.SetEnding((timer.timeAmount > 0) ? 2 : 1);
-            SceneManager.LoadScene("End");
+            StartCoroutine(LevelLoader.instance.LoadLevel(2));
         }
     }
 }
